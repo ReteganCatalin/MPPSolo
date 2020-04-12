@@ -3,10 +3,11 @@ package Model.validators;
 
 import Model.domain.Rental;
 import Model.exceptions.ValidatorException;
+import org.springframework.stereotype.Component;
 
 import java.time.Year;
 import java.util.Optional;
-
+@Component
 public class RentalValidator implements Validator<Rental> {
 
     /**

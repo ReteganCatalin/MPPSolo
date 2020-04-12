@@ -1,8 +1,6 @@
 package UI;
 
-import Service.ClientService;
-import Service.MovieService;
-import Service.RentalService;
+import Service.*;
 import UI.options.ClientOptions;
 import UI.options.MovieOptions;
 import UI.options.RentalOptions;
@@ -12,6 +10,7 @@ import Model.domain.Movie;
 import Model.domain.Rental;
 import Model.exceptions.DataTypeException;
 import Model.exceptions.MyException;
+import org.springframework.beans.factory.annotation.Autowired;
 import repository.Sort;
 import org.springframework.stereotype.Component;
 
@@ -23,21 +22,17 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 @Component
 public class Console {
+    @Autowired
+    private ClientServiceInterface clientService;
+    @Autowired
+    private MovieServiceInterface movieService;
+    @Autowired
+    private RentalServiceInterface rentalService;
 
-    private ClientService clientService;
-    private MovieService movieService;
-    private RentalService rentalService;
-    private Map<String, Runnable> fctLinks;
-    private Commands commands;
+    private Map<String, Runnable> fctLinks=new HashMap<>();
+    private Commands commands=new Commands();
 
-    public Console(ClientService clientService, MovieService movieService, RentalService rentalService) {
-        this.clientService = clientService;
-        this.movieService = movieService;
-        this.rentalService = rentalService;
-        commands = new Commands();
-        fctLinks = new HashMap<>();
-        initFunctionLinks();
-    }
+
 
     private void printMenu() {
         for (Map.Entry<Integer, String> com : commands.getCommands().entrySet()) {
@@ -106,6 +101,7 @@ public class Console {
 
         Client client = new Client(id, fName, lName, age);
         try {
+            System.out.println("here");
             clientService.updateClient(client);
         } catch (MyException e) {
             System.out.println(e.getMessage());
@@ -507,7 +503,7 @@ public class Console {
         }
 
         public void run () {
-
+            this.initFunctionLinks();
             Scanner scanner = new Scanner(System.in);
 
             while (true) {

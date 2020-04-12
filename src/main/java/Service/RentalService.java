@@ -6,6 +6,9 @@ import Model.domain.Rental;
 import Model.exceptions.MyException;
 import Model.exceptions.ValidatorException;
 import Model.validators.Validator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import repository.*;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +18,17 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 @Service
 public class RentalService implements RentalServiceInterface{
+    public static final Logger log = LoggerFactory.getLogger(RentalService.class);
+    @Autowired
+    private ClientServiceInterface clientServ;
+    @Autowired
+    private MovieServiceInterface movieServ;
+    @Autowired
+    private RentalRepository RentalRepository;
 
-    private ClientService clientServ;
-    private MovieService movieServ;
-    private IRepository<Long, Rental> RentalRepository;
+    @Autowired
     private Validator<Rental> validator;
-    public RentalService(ClientService clientServ,MovieService movieServ,IRepository<Long,Rental> RentalRepository,Validator<Rental> validator )
 
-    {
-        this.validator=validator;
-        this.clientServ=clientServ;
-        this.movieServ=movieServ;
-        this.RentalRepository=RentalRepository;
-    }
     private void checkIDs(Long ClientID, Long MovieID)
     {
         clientServ.FindOne(ClientID).orElseThrow(()->new MyException("Client ID not found! "));
@@ -44,6 +45,7 @@ public class RentalService implements RentalServiceInterface{
      */
     public void addRental(Rental rental) throws ValidatorException,MyException
     {
+        log.trace("addRental - method entered: rental={}", rental);
         checkIDs(rental.getClientID(),rental.getMovieID());
         Iterable<Rental> rentals=RentalRepository.findAll();
         Set<Rental> filteredRentals=StreamSupport.stream(rentals.spliterator(),false).collect(Collectors.toSet());
@@ -53,7 +55,10 @@ public class RentalService implements RentalServiceInterface{
                 .findFirst().ifPresent(optional->{throw new MyException("Rental for that movie and client exists");});
 
         validator.validate(rental);
-        RentalRepository.save(rental).ifPresent(optional->{throw new MyException("Rental already exists");});
+        RentalRepository.findById(rental.getId()).ifPresent(optional->{throw new MyException("Rental already exists");});
+        RentalRepository.save(rental);
+        log.debug("addRental - added: added={}", rental);
+        log.trace("addRental - method finished");
     }
 
     /**
@@ -68,15 +73,23 @@ public class RentalService implements RentalServiceInterface{
      */
     public Rental updateRental(Rental rental) throws ValidatorException,MyException
     {
-
-        Optional<Rental> found_rental=RentalRepository.findOne(rental.getId());
+        log.trace("updateRental - method entered: rental={}", rental);
+        Optional<Rental> found_rental=RentalRepository.findById(rental.getId());
         found_rental.orElseThrow(()-> new MyException("No Rental to update"));
         Long ClientID=found_rental.get().getClientID();
         Long MovieID=found_rental.get().getMovieID();
         rental.setClientID(ClientID);
         rental.setMovieID(MovieID);
         validator.validate(rental);
-        return RentalRepository.update(rental).orElseThrow(()-> new MyException("No Rental to update"));
+        RentalRepository.findById(rental.getId())
+                .ifPresent(r -> {
+                    r.setDay(rental.getDay());
+                    r.setMonth(rental.getMonth());
+                    r.setYear(rental.getYear());
+                    log.debug("updateRental - updated: c={}", r);
+                });
+        log.trace("updateRental - method finished");
+        return found_rental.get();
     }
 
     /**
@@ -91,7 +104,16 @@ public class RentalService implements RentalServiceInterface{
      */
     public Rental deleteRental(Long id) throws ValidatorException
     {
-        return RentalRepository.delete(id).orElseThrow(()-> new MyException("No rental to delete"));
+        log.trace("deleteRental - method entered: id={}", id);
+        RentalRepository.findById(id)
+                .orElseThrow(()->
+                        new MyException("No rental with that id")
+                );
+        Rental deleted=RentalRepository.findById(id).get();
+        RentalRepository.deleteById(id);
+        log.debug("deleteRental - delete: deleted={}", deleted);
+        log.trace("deleteRental - method finished");
+        return deleted;
     }
 
     /**
@@ -104,19 +126,19 @@ public class RentalService implements RentalServiceInterface{
 
     public Set<Rental> getAllRentals()
     {
+        log.trace("getAllRentals - method entered");
         Iterable<Rental> rentals=RentalRepository.findAll();
+        log.trace("getAllRentals - method finished");
         return StreamSupport.stream(rentals.spliterator(),false).collect(Collectors.toSet());
 
     }
 
     public List<Rental> getAllRentalsSorted(Sort sort)
     {
-        if(RentalRepository instanceof SortingRepository)
-        {
-            Iterable<Rental> rentals=((SortingRepository) RentalRepository).findAll(sort);
-            return StreamSupport.stream(rentals.spliterator(),false).collect(Collectors.toList());
-        }
-        throw new MyException("This is not A SUPPORTED SORTING REPOSITORY");
+        log.trace("getAllRentalsSorted - method entered sort={}",sort);
+        Iterable<Rental> sortedRentals=sort.sort(RentalRepository.findAll());
+        log.trace("getAllRentalsSorted - method finished");
+        return StreamSupport.stream(sortedRentals.spliterator(),false).collect(Collectors.toList());
 
     }
 
@@ -129,14 +151,17 @@ public class RentalService implements RentalServiceInterface{
      */
     public Set<Rental> filterRentalsByYear(int year)
     {
+        log.trace("filterRentalsByYear - method entered year={}",year);
         Iterable<Rental> rentals= RentalRepository.findAll();
         Set<Rental> filteredRentals=new HashSet<>();
         rentals.forEach(filteredRentals::add);
         filteredRentals.removeIf(rental->!(rental.getYear()==year) );
+        log.trace("filterRentalsByYear - method finished");
         return filteredRentals;
     }
 
     public Set<Rental> statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan(int movie_year,int age){
+        log.trace("statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method entered movie_year={},age={}",movie_year,age);
         List<Client> ClientList=clientServ.getAllClients().stream().filter(client->client.getAge()>=age).collect(Collectors.toList());
         List<Movie> MovieList=movieServ.getAllMovies().stream().filter(movie->movie.getYearOfRelease()==movie_year).collect(Collectors.toList());
         List<Rental> rentalsList = StreamSupport.stream(RentalRepository.findAll().spliterator(),false)
@@ -155,6 +180,7 @@ public class RentalService implements RentalServiceInterface{
         Set<Rental> filteredRentals = rentalsList.stream()
                 .filter(rental -> rental.getMovieID().equals(mostRentedMovie))
                 .collect(Collectors.toSet());
+        log.trace("statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method finished");
 
         return filteredRentals;
     }

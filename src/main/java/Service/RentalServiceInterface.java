@@ -1,18 +1,11 @@
 package Service;
 
-import Model.domain.Client;
-import Model.domain.Movie;
 import Model.domain.Rental;
 import Model.exceptions.MyException;
 import Model.exceptions.ValidatorException;
 import repository.Sort;
-import repository.SortingRepository;
-import repository.Sort;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public interface RentalServiceInterface {
 

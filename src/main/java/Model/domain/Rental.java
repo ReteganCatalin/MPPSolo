@@ -21,6 +21,15 @@ public class Rental extends BaseEntity<Long> {
         this.month = month;
         this.day = day;
     }
+    public Rental()
+    {
+        setId(0L);
+        this.ClientID=0L;
+        this.MovieID=0L;
+        this.day=1;
+        this.month=1;
+        this.year = 2000;
+    }
 
     @Override
     public boolean equals(Object o) {

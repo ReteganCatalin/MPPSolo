@@ -2,11 +2,12 @@ package Model.validators;
 
 import Model.domain.Movie;
 import Model.exceptions.ValidatorException;
+import org.springframework.stereotype.Component;
 
 import java.time.Year;
 import java.util.Optional;
 
-
+@Component
 public class MovieValidator implements Validator<Movie> {
 
     /**

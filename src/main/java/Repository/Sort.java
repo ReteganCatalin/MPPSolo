@@ -87,7 +87,7 @@ public class Sort {
     }
 
     private String AddPackage(String className) {
-        return "model.domain."+className;
+        return "Model.domain."+className;
     }
 
 

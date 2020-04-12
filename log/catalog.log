@@ -1,4 +1,31 @@
-2020-04-12T13:37:46,289 WARN  [main]: AnnotationConfigApplicationContext   - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [Config.AppConfig]; nested exception is java.io.FileNotFoundException: class path resource [local/db.properties] cannot be opened because it does not exist 
-2020-04-12T13:39:06,065 WARN  [main]: AnnotationConfigApplicationContext   - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [org.springframework.data.web.config.SpringDataWebConfiguration]; nested exception is java.io.FileNotFoundException: class path resource [org/springframework/web/servlet/config/annotation/WebMvcConfigurer.class] cannot be opened because it does not exist 
-2020-04-12T13:40:39,800 WARN  [main]: AnnotationConfigApplicationContext   - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'rentalService' defined in file [C:\Users\Catalin\Desktop\Faculty\MPPSolo\MPP\build\classes\java\main\Service\RentalService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'Service.ClientService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {} 
-2020-04-12T13:42:30,562 WARN  [main]: AnnotationConfigApplicationContext   - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'clientService' defined in file [C:\Users\Catalin\Desktop\Faculty\MPPSolo\MPP\build\classes\java\main\Service\ClientService.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'repository.IRepository<java.lang.Long, Model.domain.Client>' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {} 
+
+2020-04-12T17:19:36,304 WARN  [main]: SqlExceptionHelper                   - SQL Error: 0, SQLState: 23505 
+2020-04-12T17:19:36,307 ERROR [main]: SqlExceptionHelper                   - ERROR: duplicate key value violates unique constraint "client_pkey"
+  Detail: Key (id)=(4) already exists. 
+2020-04-12T17:27:40,085 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-12T17:27:40,240 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-12T17:27:42,084 TRACE [main]: ClientService                        - getAllClientsSorted - method entered sort=repository.Sort@53dba9cd 
+2020-04-12T17:27:42,095 TRACE [main]: ClientService                        - getAllClientsSorted - method finished 
+2020-04-12T17:27:55,087 TRACE [main]: RentalService                        - statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method entered movie_year=2000,age=12 
+2020-04-12T17:27:55,088 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-12T17:27:55,093 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-12T17:27:55,094 TRACE [main]: MovieService                         - getAllMovies - method entered 
+2020-04-12T17:27:55,101 TRACE [main]: MovieService                         - getAllMovies - method finished 
+2020-04-12T17:31:35,724 TRACE [main]: RentalService                        - statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method entered movie_year=2000,age=12 
+2020-04-12T17:31:35,728 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-12T17:31:35,876 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-12T17:31:35,877 TRACE [main]: MovieService                         - getAllMovies - method entered 
+2020-04-12T17:31:35,884 TRACE [main]: MovieService                         - getAllMovies - method finished 
+2020-04-12T17:31:51,727 TRACE [main]: RentalService                        - getAllRentals - method entered 
+2020-04-12T17:31:51,732 TRACE [main]: RentalService                        - getAllRentals - method finished 
+2020-04-12T17:32:10,738 TRACE [main]: MovieService                         - getAllMovies - method entered 
+2020-04-12T17:32:10,742 TRACE [main]: MovieService                         - getAllMovies - method finished 
+2020-04-12T17:32:27,745 TRACE [main]: RentalService                        - statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method entered movie_year=2015,age=1 
+2020-04-12T17:32:27,745 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-12T17:32:27,750 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-12T17:32:27,751 TRACE [main]: MovieService                         - getAllMovies - method entered 
+2020-04-12T17:32:27,754 TRACE [main]: MovieService                         - getAllMovies - method finished 
+2020-04-12T17:32:27,758 TRACE [main]: RentalService                        - statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method finished 
+2020-04-12T17:33:39,785 TRACE [main]: RentalService                        - addRental - method entered: rental=Rental ID: '7', Client ID: '1', Movie ID: '11', Year: '2020', Month: '1', Day: '1' 
+2020-04-12T17:33:40,194 DEBUG [main]: RentalService                        - addRental - delete: added=Rental ID: '7', Client ID: '1', Movie ID: '11', Year: '2020', Month: '1', Day: '1' 
+2020-04-12T17:33:40,194 TRACE [main]: RentalService                        - addRental - method finished 

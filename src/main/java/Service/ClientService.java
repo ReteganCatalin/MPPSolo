@@ -6,7 +6,11 @@ import Model.domain.Movie;
 import Model.exceptions.MyException;
 import Model.exceptions.ValidatorException;
 import Model.validators.Validator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import repository.*;
 
 
@@ -16,18 +20,17 @@ import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 @Service
 public class ClientService implements ClientServiceInterface{
-    private IRepository<Long, Client> repository;
+    public static final Logger log = LoggerFactory.getLogger(ClientService.class);
+    @Autowired
+    private ClientRepository repository;
+    @Autowired
     private Validator<Client> validator;
 
-    public ClientService(IRepository<Long,Client> repository,Validator<Client> validator)
-    {
-        this.validator=validator;
-        this.repository=repository;
-    }
 
+    @Override
     public Optional<Client> FindOne(Long ID)
     {
-        return this.repository.findOne(ID);
+        return this.repository.findById(ID);
     }
     /**
      * Calls the repository save method with a given Client Object
@@ -38,10 +41,16 @@ public class ClientService implements ClientServiceInterface{
      * @throws MyException
      *             if there exist already an entity with that ClientNumber
      */
+    @Override
+    @Transactional
     public void addClient(Client client) throws ValidatorException
     {
+        log.trace("addClient - method entered: client={}", client);
         validator.validate(client);
-        repository.save(client).ifPresent(optional->{throw new MyException("Client already exists");});
+        repository.findById(client.getId()).ifPresent(optional->{throw new MyException("Client already exists");});
+        repository.save(client);
+        log.debug("addClient - added: client={}", client);
+        log.trace("addClient - method finished");
     }
 
     /**
@@ -54,10 +63,22 @@ public class ClientService implements ClientServiceInterface{
      * @throws MyException
      *             if there is no entity to be updated.
      */
+    @Transactional
     public Client updateClient(Client client) throws ValidatorException,MyException
     {
         validator.validate(client);
-        return repository.update(client).orElseThrow(()-> new MyException("No client to update"));
+        log.trace("updateClient - method entered: client={}", client);
+        Client updated=repository.findById(client.getId()).orElseThrow(()-> new MyException("No client to update"));
+        repository.findById(client.getId())
+                .ifPresent(c -> {
+                    c.setFirstName(client.getFirstName());
+                    c.setLastName(client.getLastName());
+                    c.setAge(client.getAge());
+                    log.debug("updateClient - updated: c={}", c);
+                });
+        System.out.println("here");
+        log.trace("updateClient - method finished");
+        return updated;
     }
 
     /**
@@ -70,9 +91,19 @@ public class ClientService implements ClientServiceInterface{
      * @throws MyException
      *             if there is no entity to be deleted.
      */
+    @Transactional
     public Client deleteClient(Long id) throws ValidatorException
     {
-        return repository.delete(id).orElseThrow(()-> new MyException("No client to delete"));
+        log.trace("deleteClient - method entered: client={}", id);
+        repository.findById(id)
+                .orElseThrow(()->
+                    new MyException("No client with that id")
+                );
+        Client deleted=repository.findById(id).get();
+        repository.deleteById(id);
+        log.debug("deleteClient - deleted: deleted{}", deleted);
+        log.trace("deleteClient - method finished");
+        return deleted;
     }
 
     /**
@@ -82,20 +113,19 @@ public class ClientService implements ClientServiceInterface{
      */
     public Set<Client> getAllClients()
     {
+        log.trace("getAllClients - method entered");
         Iterable<Client> clients=repository.findAll();
+        log.trace("getAllClients - method finished");
         return StreamSupport.stream(clients.spliterator(),false).collect(Collectors.toSet());
 
     }
 
     public List<Client> getAllClientsSorted(Sort sort)
     {
-        if(repository instanceof  SortingRepository)
-        {
-            Iterable<Client> clients=((SortingRepository) repository).findAll(sort);
-            return StreamSupport.stream(clients.spliterator(),false).collect(Collectors.toList());
-        }
-        throw new MyException("This is not A SUPPORTED SORTING REPOSITORY");
-
+        log.trace("getAllClientsSorted - method entered sort={}",sort);
+        Iterable<Client> sortedClients=sort.sort(repository.findAll());
+        log.trace("getAllClientsSorted - method finished");
+        return StreamSupport.stream(sortedClients.spliterator(),false).collect(Collectors.toList());
     }
 
     /**
@@ -107,14 +137,18 @@ public class ClientService implements ClientServiceInterface{
      */
     public Set<Client> filterClientsByName(String name)
     {
+        log.trace("filterClientsByName - method entered name={}",name);
         Iterable<Client> clients=repository.findAll();
         Set<Client> filteredClients=new HashSet<>();
         clients.forEach(filteredClients::add);
         filteredClients.removeIf(client->!(client.getLastName().contains(name) || client.getFirstName().contains(name)) );
+        log.trace("filterClientsByName - method finished");
         return filteredClients;
     }
 
     public List<Client> statOldestClients(){
+        log.trace("statOldestClients - method entered ");
+        log.trace("statOldestClients - method finished ");
         return StreamSupport.stream(repository.findAll().spliterator(),false).collect(Collectors.toList())
                 .stream()
                 .sorted((o1, o2) -> o2.getAge() - o1.getAge())
