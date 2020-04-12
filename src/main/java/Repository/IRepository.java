@@ -1,10 +1,11 @@
-package Repository;
+package repository;
 
 
 
 import Model.domain.BaseEntity;
 import Model.exceptions.ValidatorException;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Optional;
  * @author radu.
  *
  */
-public interface IRepository<ID, T extends BaseEntity<ID>> {
+public interface IRepository<ID extends Serializable, T extends BaseEntity<ID>> {
     /**
      * Find the entity with the given {@code id}.
      *

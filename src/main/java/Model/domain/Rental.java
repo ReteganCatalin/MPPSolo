@@ -2,8 +2,9 @@ package Model.domain;
 
 import Model.domain.BaseEntity;
 
+import javax.persistence.Entity;
 import java.util.Objects;
-
+@Entity
 public class Rental extends BaseEntity<Long> {
 
     private Long ClientID;

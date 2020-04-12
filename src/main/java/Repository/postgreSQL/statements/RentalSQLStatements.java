@@ -2,7 +2,7 @@ package repository.postgreSQL.statements;
 
 public enum RentalSQLStatements {
     INSERT("insert into ", " (id,clientid,movieid,day,month,year) values(?,?,?,?,?,?)"),
-    DELETE("delete from ", " where id = ");
+    DELETE("delete from ", " where id = ?");
 
     private final String cmdStart;
     private final String cmdEnd;

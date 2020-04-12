@@ -1,19 +1,54 @@
-package Repository.postgreSQL;
+package repository.postgreSQL;
 
 import Model.domain.Movie;
-import Model.exceptions.MyException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcOperations;
+import repository.Sort;
+import repository.SortingRepository;
+import repository.postgreSQL.statements.ClientSQLStatements;
 import repository.postgreSQL.statements.MovieSQLStatements;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 
-public class MovieSQLRepository extends repository.postgreSQL.PostgreSQLRepository<Long, Movie> {
-    public MovieSQLRepository() throws SQLException {
-        super("movie");
-    }
+public class MovieSQLRepository implements SortingRepository<Long, Movie> {
+
+    @Autowired
+    private JdbcOperations jdbcOperations;
 
     @Override
+    public Optional<Movie> findOne(Long ID) {
+        if(ID == null)
+        {
+            throw new IllegalArgumentException("id must not be null");
+        }
+        String sql = "select * from movie where id=?";
+        try {
+        return Optional.ofNullable(jdbcOperations.queryForObject(sql,new Object[]{ID}, (rs, rowNum) ->processData(rs)));
+        }catch(org.springframework.dao.EmptyResultDataAccessException e )
+        {
+            return Optional.empty();
+        }
+
+}
+
+    @Override
+    public List<Movie> findAll() {
+
+        String sql = "select * from movie";
+        return jdbcOperations.query(sql, (rs, rowNum) -> processData(rs));
+
+    }
+
+    public Iterable<Movie> findAll(Sort sort)
+    {
+        String sql = "select * from movie";
+        return sort.sort(jdbcOperations.query(sql, (rs, rowNum) -> processData(rs)));
+    }
+
+
     protected Movie processData(ResultSet resultSet) throws SQLException {
         long ID = resultSet.getLong(1);
         String title = resultSet.getString(2);
@@ -26,46 +61,32 @@ public class MovieSQLRepository extends repository.postgreSQL.PostgreSQLReposito
     }
 
     @Override
-    protected void executeInsert(Movie entity) {
-        try(PreparedStatement prep = conn.prepareStatement(MovieSQLStatements.INSERT.composeMessage(super.getTableName()))) {
-            prep.setLong(1, entity.getId());
-            prep.setString(2, entity.getTitle());
-            prep.setString(3, entity.getDirector());
-            prep.setInt(4, entity.getYearOfRelease());
-            prep.setString(5, entity.getMainStar());
-            prep.setString(6, entity.getGenre());
-            prep.executeUpdate();
-        }
-        catch (SQLException e){
-            throw new MyException("SQL Server error occured!");
-        }
+    public Optional<Movie> save(Movie entity) {
+        String sql = MovieSQLStatements.INSERT.composeMessage("movie");
+        Optional<Movie> opt=findOne(entity.getId());
+        if (opt.isPresent())
+            return opt;
+        jdbcOperations.update(sql, entity.getId(), entity.getTitle(),entity.getDirector(),entity.getYearOfRelease(),entity.getMainStar(),entity.getMainStar());
+        return findOne(entity.getId());
     }
 
     @Override
-    protected void executeDelete(Long aLong) {
-        try(PreparedStatement prep = conn.prepareStatement(MovieSQLStatements.DELETE.composeMessage(super.getTableName()) + aLong)) {
-            prep.executeUpdate();
-        }
-        catch (SQLException e){
-            throw new MyException("SQL Server error occured!");
-        }
+    public Optional<Movie> delete(Long aLong) {
+        String sql = ClientSQLStatements.DELETE.composeMessage("movie");
+        Optional<Movie> opt=findOne(aLong);
+        if (!opt.isPresent())
+            return Optional.empty();
+        jdbcOperations.update(sql, aLong);
+        return opt;
     }
 
     @Override
-    protected void executeUpdate(Movie entity) {
-        try(PreparedStatement prep = conn.prepareStatement(
-                "UPDATE " + super.getTableName() +
-                        " SET title = " + "'" + entity.getTitle() + "', " +
-                        "director = " + "'" + entity.getDirector() + "', " +
-                        "yearofrelease = " + "'" + entity.getYearOfRelease() + "', " +
-                        "mainstar = " + "'" + entity.getMainStar() + "' " +
-                        "genre = " + "'" + entity.getGenre() + "' " +
-                        "WHERE id = " + entity.getId()
-        )) {
-            prep.executeUpdate();
-        }
-        catch (SQLException e){
-            throw new MyException(e.getMessage());
-        }
+    public Optional<Movie> update(Movie entity) {
+        String sql= "UPDATE client SET title = ? , director = ? , yearofrelease = ?, mainstar = ?, genre = ? WHERE id = ?";
+        Optional<Movie> opt=findOne(entity.getId());
+        if (!opt.isPresent())
+            return Optional.empty();
+        jdbcOperations.update(sql,entity.getTitle(),entity.getDirector(),entity.getYearOfRelease(),entity.getMainStar(),entity.getGenre(),entity.getId());
+        return opt;
     }
 }

@@ -2,8 +2,9 @@ package Model.domain;
 
 import Model.domain.BaseEntity;
 
+import javax.persistence.Entity;
 import java.util.Objects;
-
+@Entity
 public class Client extends BaseEntity<Long> {
 
     private String firstName;

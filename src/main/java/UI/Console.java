@@ -12,14 +12,16 @@ import Model.domain.Movie;
 import Model.domain.Rental;
 import Model.exceptions.DataTypeException;
 import Model.exceptions.MyException;
-import Repository.Sort;
+import repository.Sort;
+import org.springframework.stereotype.Component;
+
 
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
+@Component
 public class Console {
 
     private ClientService clientService;
@@ -71,7 +73,6 @@ public class Console {
         }
         try {
             clientService.deleteClient(id);
-            rentalService.DeleteClientRentals(id);
         } catch (MyException e) {
             System.out.println(e.getMessage());
         }
@@ -462,7 +463,6 @@ public class Console {
             }
             try {
                 movieService.deleteMovie(id);
-                rentalService.DeleteMovieRentals(id);
             } catch (MyException e) {
                 System.out.println(e.getMessage());
             }

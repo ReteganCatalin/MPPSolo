@@ -6,15 +6,16 @@ import Model.domain.Movie;
 import Model.exceptions.MyException;
 import Model.exceptions.ValidatorException;
 import Model.validators.Validator;
-import Repository.*;
+import org.springframework.stereotype.Service;
+import repository.*;
 
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
-
-public class ClientService {
+@Service
+public class ClientService implements ClientServiceInterface{
     private IRepository<Long, Client> repository;
     private Validator<Client> validator;
 

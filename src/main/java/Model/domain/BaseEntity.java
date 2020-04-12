@@ -1,7 +1,17 @@
 package Model.domain;
 
-public class BaseEntity<ID> {
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
+
+@MappedSuperclass
+public class BaseEntity<ID extends Serializable> implements Serializable {
+
+    @Id
+    @GeneratedValue
     private ID id;
+
 
     public ID getId() {
         return id;

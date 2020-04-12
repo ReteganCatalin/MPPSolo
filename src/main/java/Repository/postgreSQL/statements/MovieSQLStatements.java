@@ -2,7 +2,7 @@ package repository.postgreSQL.statements;
 
 public enum MovieSQLStatements {
     INSERT("insert into ", " (id,title,director,yearofrelease,mainstar,genre) values(?,?,?,?,?,?)"),
-    DELETE("delete from ", " where id = ");
+    DELETE("delete from ", " where id = ?");
 
     private final String cmdStart;
     private final String cmdEnd;

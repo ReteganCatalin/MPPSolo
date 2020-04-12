@@ -6,14 +6,15 @@ import Model.domain.Rental;
 import Model.exceptions.MyException;
 import Model.exceptions.ValidatorException;
 import Model.validators.Validator;
-import Repository.*;
+import repository.*;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-public class RentalService {
+@Service
+public class RentalService implements RentalServiceInterface{
 
     private ClientService clientServ;
     private MovieService movieServ;
@@ -27,7 +28,7 @@ public class RentalService {
         this.movieServ=movieServ;
         this.RentalRepository=RentalRepository;
     }
-    public void checkIDs(Long ClientID,Long MovieID)
+    private void checkIDs(Long ClientID, Long MovieID)
     {
         clientServ.FindOne(ClientID).orElseThrow(()->new MyException("Client ID not found! "));
         movieServ.FindOne(MovieID).orElseThrow(()->new MyException("Movie ID not found! "));
@@ -119,29 +120,6 @@ public class RentalService {
 
     }
 
-
-
-    public void DeleteClientRentals(Long id)
-    {
-        Iterable<Rental> rentals=RentalRepository.findAll();
-        Set<Rental> filteredRentals=StreamSupport.stream(rentals.spliterator(),false).collect(Collectors.toSet());
-        filteredRentals
-                .stream()
-                .filter(toDeleteRentals-> (toDeleteRentals.getClientID() ==id))
-                .forEach(toDelete->{RentalRepository.delete(toDelete.getId());}
-                );
-
-    }
-    public void DeleteMovieRentals(Long id)
-    {
-        Iterable<Rental> rentals=RentalRepository.findAll();
-        Set<Rental> filteredRentals=StreamSupport.stream(rentals.spliterator(),false).collect(Collectors.toSet());
-        filteredRentals
-                .stream()
-                .filter(toDeleteRentals-> toDeleteRentals.getMovieID() == id)
-                .forEach(toDelete->{RentalRepository.delete(toDelete.getId());}
-                );
-    }
     /**
      * Filters all the rentals by their Years
      *

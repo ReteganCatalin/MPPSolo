@@ -3,7 +3,7 @@ package repository.postgreSQL.statements;
 
 public enum ClientSQLStatements {
     INSERT("insert into ", " (id,firstname,lastname,age) values(?,?,?,?)"),
-    DELETE("delete from ", " where id = ");
+    DELETE("delete from ", " where id = ?");
 
     private final String cmdStart;
     private final String cmdEnd;

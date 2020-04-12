@@ -1,65 +1,90 @@
-package Repository.postgreSQL;
+package repository.postgreSQL;
 
 import Model.domain.Client;
-import Model.exceptions.MyException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcOperations;
+import repository.Sort;
+import repository.SortingRepository;
 import repository.postgreSQL.statements.ClientSQLStatements;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 
-public class ClientSQLRepository extends repository.postgreSQL.PostgreSQLRepository<Long, Client> {
-    public ClientSQLRepository() throws SQLException {
-        super("client");
+public class ClientSQLRepository implements SortingRepository<Long, Client> {
+
+    @Autowired
+    private JdbcOperations jdbcOperations;
+
+    @Override
+    public Optional<Client> findOne(Long ID) {
+        if(ID == null)
+        {
+            throw new IllegalArgumentException("id must not be null");
+        }
+        String sql = "select * from client where id=?";
+        try {
+            return Optional.ofNullable(jdbcOperations.queryForObject(sql, new Object[]{ID}, (rs, rowNum) -> processData(rs)));
+        }catch(org.springframework.dao.EmptyResultDataAccessException e )
+        {
+            return Optional.empty();
+        }
+
+
     }
 
     @Override
+    public List<Client> findAll() {
+
+        String sql = "select * from client";
+        return jdbcOperations.query(sql, (rs, rowNum) -> processData(rs));
+
+    }
+
+    public Iterable<Client> findAll(Sort sort)
+    {
+        String sql = "select * from client";
+        return sort.sort(jdbcOperations.query(sql, (rs, rowNum) -> processData(rs)));
+    }
+
+
     protected Client processData(ResultSet resultSet) throws SQLException {
-        long ID = resultSet.getLong(1);
-        String firstName = resultSet.getString(2);
-        String lastName = resultSet.getString(3);
-        int age = resultSet.getInt(4);
+        long ID = resultSet.getLong("id");
+        String firstName = resultSet.getString("firstname");
+        String lastName = resultSet.getString("lastname");
+        int age = resultSet.getInt("age");
 
         return new Client(ID, firstName, lastName, age);
     }
 
     @Override
-    protected void executeInsert(Client entity) {
-        try(PreparedStatement prep = conn.prepareStatement(ClientSQLStatements.INSERT.composeMessage(super.getTableName()))) {
-            prep.setLong(1, entity.getId());
-            prep.setString(2, entity.getFirstName());
-            prep.setString(3, entity.getLastName());
-            prep.setInt(4, entity.getAge());
-            prep.executeUpdate();
-        }
-        catch (SQLException e){
-            throw new MyException("SQL Server error occured!");
-        }
+    public Optional<Client> save(Client entity) {
+        String sql = ClientSQLStatements.INSERT.composeMessage("client");
+        Optional<Client> opt = findOne(entity.getId());
+        if (opt.isPresent())
+            return opt;
+        jdbcOperations.update(sql, entity.getId(), entity.getFirstName(),entity.getLastName(),entity.getAge());
+        return Optional.empty();
     }
 
     @Override
-    protected void executeDelete(Long aLong) {
-        try(PreparedStatement prep = conn.prepareStatement(ClientSQLStatements.DELETE.composeMessage(super.getTableName()) + aLong)) {
-            prep.executeUpdate();
-        }
-        catch (SQLException e){
-            throw new MyException("SQL Server error occured!");
-        }
+    public Optional<Client> delete(Long aLong) {
+        String sql = ClientSQLStatements.DELETE.composeMessage("client");
+        Optional<Client> opt=findOne(aLong);
+        if (!opt.isPresent())
+            return Optional.empty();
+        jdbcOperations.update(sql, aLong);
+        return opt;
     }
 
     @Override
-    protected void executeUpdate(Client entity) {
-        try(PreparedStatement prep = conn.prepareStatement(
-                "UPDATE " + super.getTableName() +
-                        " SET firstname = " + "'" + entity.getFirstName() + "', " +
-                        "lastname = " + "'" + entity.getLastName() + "', " +
-                        "age = " + "'" + entity.getAge() + "' " +
-                        "WHERE id = " + entity.getId()
-                )) {
-            prep.executeUpdate();
-        }
-        catch (SQLException e){
-            throw new MyException(e.getMessage());
-        }
+    public Optional<Client> update(Client entity) {
+        String sql= "UPDATE client SET firstname = ? , lastname = ? , age = ? WHERE id = ?";
+        Optional<Client> opt=findOne(entity.getId());
+        if (!opt.isPresent())
+            return Optional.empty();
+        jdbcOperations.update(sql,entity.getFirstName(),entity.getLastName(),entity.getAge(),entity.getId());
+        return opt;
     }
 }

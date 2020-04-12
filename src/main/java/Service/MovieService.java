@@ -6,18 +6,22 @@ import Model.domain.Rental;
 import Model.exceptions.MyException;
 import Model.exceptions.ValidatorException;
 import Model.validators.Validator;
-import Repository.IRepository;
-import Repository.Sort;
-import Repository.SortingRepository;
+import org.springframework.stereotype.Service;
+import repository.IRepository;
+import repository.Sort;
+import repository.SortingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-public class MovieService {
+@Service
+public class MovieService implements MovieServiceInterface {
+    @Autowired
     private IRepository<Long, Movie> repository;
+    @Autowired
     private Validator<Movie> validator;
     public MovieService(IRepository<Long,Movie> repository,Validator<Movie> validator)
     {
