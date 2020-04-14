@@ -8,10 +8,11 @@ import Model.validators.MovieValidator;
 import Model.validators.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import repository.IRepository;
 import repository.MovieRepository;
-import repository.Sort;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -124,7 +125,7 @@ public class MovieService implements MovieServiceInterface {
     public List<Movie> getAllMoviesSorted(Sort sort)
     {
         log.trace("getAllMoviesSorted - method entered sort={}",sort);
-        Iterable<Movie> sortedMovies=sort.sort(repository.findAll());
+        Iterable<Movie> sortedMovies=repository.findAll(sort);
         log.trace("getAllMoviesSorted - method finished");
         return StreamSupport.stream(sortedMovies.spliterator(),false).collect(Collectors.toList());
 

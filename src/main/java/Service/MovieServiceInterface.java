@@ -3,7 +3,8 @@ package Service;
 import Model.domain.Movie;
 import Model.exceptions.MyException;
 import Model.exceptions.ValidatorException;
-import repository.Sort;
+import org.springframework.data.domain.Sort;
+
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -9,8 +9,10 @@ import Model.validators.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import repository.*;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import repository.RentalRepository;
 
 import java.util.*;
 import java.util.function.Function;
@@ -24,7 +26,7 @@ public class RentalService implements RentalServiceInterface{
     @Autowired
     private MovieServiceInterface movieServ;
     @Autowired
-    private RentalRepository RentalRepository;
+    private repository.RentalRepository RentalRepository;
 
     @Autowired
     private Validator<Rental> validator;
@@ -136,7 +138,7 @@ public class RentalService implements RentalServiceInterface{
     public List<Rental> getAllRentalsSorted(Sort sort)
     {
         log.trace("getAllRentalsSorted - method entered sort={}",sort);
-        Iterable<Rental> sortedRentals=sort.sort(RentalRepository.findAll());
+        Iterable<Rental> sortedRentals=RentalRepository.findAll(sort);
         log.trace("getAllRentalsSorted - method finished");
         return StreamSupport.stream(sortedRentals.spliterator(),false).collect(Collectors.toList());
 

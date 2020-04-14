@@ -29,3 +29,7 @@
 2020-04-12T17:33:39,785 TRACE [main]: RentalService                        - addRental - method entered: rental=Rental ID: '7', Client ID: '1', Movie ID: '11', Year: '2020', Month: '1', Day: '1' 
 2020-04-12T17:33:40,194 DEBUG [main]: RentalService                        - addRental - delete: added=Rental ID: '7', Client ID: '1', Movie ID: '11', Year: '2020', Month: '1', Day: '1' 
 2020-04-12T17:33:40,194 TRACE [main]: RentalService                        - addRental - method finished 
+2020-04-14T11:56:18,917 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-14T11:56:19,135 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-14T11:56:32,927 TRACE [main]: ClientService                        - getAllClientsSorted - method entered sort=FirstName: ASC,LastName: ASC,Age: DESC 
+2020-04-14T11:56:32,945 TRACE [main]: ClientService                        - getAllClientsSorted - method finished 

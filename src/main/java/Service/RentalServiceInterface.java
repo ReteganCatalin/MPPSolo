@@ -3,7 +3,8 @@ package Service;
 import Model.domain.Rental;
 import Model.exceptions.MyException;
 import Model.exceptions.ValidatorException;
-import repository.Sort;
+import org.springframework.data.domain.Sort;
+
 
 import java.util.*;
 

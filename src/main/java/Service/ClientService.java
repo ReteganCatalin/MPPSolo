@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.*;
+import org.springframework.data.domain.Sort;
 
 
 import java.util.*;
@@ -123,7 +124,7 @@ public class ClientService implements ClientServiceInterface{
     public List<Client> getAllClientsSorted(Sort sort)
     {
         log.trace("getAllClientsSorted - method entered sort={}",sort);
-        Iterable<Client> sortedClients=sort.sort(repository.findAll());
+        Iterable<Client> sortedClients=repository.findAll(sort);
         log.trace("getAllClientsSorted - method finished");
         return StreamSupport.stream(sortedClients.spliterator(),false).collect(Collectors.toList());
     }

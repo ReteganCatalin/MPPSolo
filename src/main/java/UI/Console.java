@@ -11,9 +11,9 @@ import Model.domain.Rental;
 import Model.exceptions.DataTypeException;
 import Model.exceptions.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
-import repository.Sort;
-import org.springframework.stereotype.Component;
 
+import org.springframework.stereotype.Component;
+import org.springframework.data.domain.Sort;
 
 import java.io.IOException;
 import java.util.*;
@@ -31,6 +31,30 @@ public class Console {
 
     private Map<String, Runnable> fctLinks=new HashMap<>();
     private Commands commands=new Commands();
+
+    private void initFunctionLinks() {
+        fctLinks.put(ClientOptions.ADD.getCmdMessage(), this::uiAddClient);
+        fctLinks.put(ClientOptions.PRINT.getCmdMessage(), this::uiPrintAllClients);
+        fctLinks.put(ClientOptions.SORT.getCmdMessage(), this::uiPrintAllClientsSorted);
+        fctLinks.put(ClientOptions.FILTER.getCmdMessage(), this::uiFilterClientsByName);
+        fctLinks.put(ClientOptions.DELETE.getCmdMessage(), this::uiDeleteClient);
+        fctLinks.put(ClientOptions.UPDATE.getCmdMessage(), this::uiUpdateClient);
+        fctLinks.put(ClientOptions.STAT.getCmdMessage(), this::uiStatOldestClients);
+        fctLinks.put(MovieOptions.ADD.getCmdMessage(), this::uiAddMovie);
+        fctLinks.put(MovieOptions.PRINT.getCmdMessage(), this::uiPrintAllMovie);
+        fctLinks.put(MovieOptions.SORT.getCmdMessage(), this::uiPrintAllMoviesSorted);
+        fctLinks.put(MovieOptions.FILTER.getCmdMessage(), this::uiFilterMovieByTitle);
+        fctLinks.put(MovieOptions.DELETE.getCmdMessage(), this::uiDeleteMovie);
+        fctLinks.put(MovieOptions.UPDATE.getCmdMessage(), this::uiUpdateMovie);
+        fctLinks.put(MovieOptions.STAT.getCmdMessage(), this::uiStatMostRichYearsInMovies);
+        fctLinks.put(RentalOptions.ADD.getCmdMessage(), this::uiAddRental);
+        fctLinks.put(RentalOptions.PRINT.getCmdMessage(), this::uiPrintAllRentals);
+        fctLinks.put(RentalOptions.SORT.getCmdMessage(), this::uiPrintAllRentalsSorted);
+        fctLinks.put(RentalOptions.FILTER.getCmdMessage(), this::uiFilterRentalsByYear);
+        fctLinks.put(RentalOptions.DELETE.getCmdMessage(), this::uiDeleteRental);
+        fctLinks.put(RentalOptions.UPDATE.getCmdMessage(), this::uiUpdateRental);
+        fctLinks.put(RentalOptions.STAT.getCmdMessage(), this::uiStatMonthsOfMostRentedMovie);
+    }
 
 
 
@@ -231,29 +255,7 @@ public class Console {
         rentalService.getAllRentals().forEach(System.out::println);
     }
 
-    private void initFunctionLinks() {
-        fctLinks.put(ClientOptions.ADD.getCmdMessage(), this::uiAddClient);
-        fctLinks.put(ClientOptions.PRINT.getCmdMessage(), this::uiPrintAllClients);
-        fctLinks.put(ClientOptions.SORT.getCmdMessage(), this::uiPrintAllClientsSorted);
-        fctLinks.put(ClientOptions.FILTER.getCmdMessage(), this::uiFilterClientsByName);
-        fctLinks.put(ClientOptions.DELETE.getCmdMessage(), this::uiDeleteClient);
-        fctLinks.put(ClientOptions.UPDATE.getCmdMessage(), this::uiUpdateClient);
-        fctLinks.put(ClientOptions.STAT.getCmdMessage(), this::uiStatOldestClients);
-        fctLinks.put(MovieOptions.ADD.getCmdMessage(), this::uiAddMovie);
-        fctLinks.put(MovieOptions.PRINT.getCmdMessage(), this::uiPrintAllMovie);
-        fctLinks.put(MovieOptions.SORT.getCmdMessage(), this::uiPrintAllMoviesSorted);
-        fctLinks.put(MovieOptions.FILTER.getCmdMessage(), this::uiFilterMovieByTitle);
-        fctLinks.put(MovieOptions.DELETE.getCmdMessage(), this::uiDeleteMovie);
-        fctLinks.put(MovieOptions.UPDATE.getCmdMessage(), this::uiUpdateMovie);
-        fctLinks.put(MovieOptions.STAT.getCmdMessage(), this::uiStatMostRichYearsInMovies);
-        fctLinks.put(RentalOptions.ADD.getCmdMessage(), this::uiAddRental);
-        fctLinks.put(RentalOptions.PRINT.getCmdMessage(), this::uiPrintAllRentals);
-        fctLinks.put(RentalOptions.SORT.getCmdMessage(), this::uiPrintAllRentalsSorted);
-        fctLinks.put(RentalOptions.FILTER.getCmdMessage(), this::uiFilterRentalsByYear);
-        fctLinks.put(RentalOptions.DELETE.getCmdMessage(), this::uiDeleteRental);
-        fctLinks.put(RentalOptions.UPDATE.getCmdMessage(), this::uiUpdateRental);
-        fctLinks.put(RentalOptions.STAT.getCmdMessage(), this::uiStatMonthsOfMostRentedMovie);
-    }
+
 
     private void uiStatOldestClients() {
         System.out.println("Top 5 oldest Clients: ");
@@ -396,8 +398,7 @@ public class Console {
     }
 
     private void uiPrintAllClientsSorted() {
-        Sort sort = new Sort("FirstName","LastName").and(new Sort(Sort.Direction.DESC, "Age"));
-        sort.setClassName("Client");
+        Sort sort = Sort.by("FirstName","LastName").ascending().and(Sort.by("Age").descending());
         clientService.getAllClientsSorted(sort).forEach(System.out::println);
     }
 
@@ -408,30 +409,33 @@ public class Console {
         Sort sort = null;
         try {
             while (true) {
-                System.out.println("Pick order DESC or ASC: ");
-                String order = scanner.nextLine();
-                if (order.equals("done")) break;
-                Sort.Direction sortingDirection;
-                if (order.equals("ASC")) {
-                    sortingDirection = Sort.Direction.ASC;
-                } else if (order.equals("DESC")) {
-                    sortingDirection = Sort.Direction.DESC;
-                } else {
-                    System.out.println("Wrong input!");
-                    break;
-                }
+
                 System.out.println("Pick column be careful it should be one of(Id,MainStar,Title,Director,Genre,YearOfRelease):");
                 String columnName = scanner.nextLine();
                 if (criterias.stream().filter(criteria -> criteria == columnName).collect(Collectors.toList()).size() == 0) {
                     System.out.println("Wrong column next time be more careful !");
                     break;
                 }
-                if (sort == null) {
-                    sort = new Sort(sortingDirection, columnName);
-                    sort.setClassName("Movie");
+                System.out.println("Pick order DESC or ASC: ");
+                String order = scanner.nextLine();
+                if (order.equals("done")) break;
+                if (order.equals("ASC")) {
+                    if (sort == null) {
+                        sort = Sort.by(columnName).ascending();
+                    } else {
+                        sort = sort.and(Sort.by(columnName).descending());
+                    }
+                } else if (order.equals("DESC")) {
+                    if (sort == null) {
+                        sort = Sort.by(columnName).ascending();
+                    } else {
+                        sort = sort.and(Sort.by(columnName).descending());
+                    }
                 } else {
-                    sort = sort.and(new Sort(sortingDirection, columnName));
+                    System.out.println("Wrong input!");
+                    break;
                 }
+
 
             }
             movieService.getAllMoviesSorted(sort).forEach(System.out::println);
@@ -440,8 +444,7 @@ public class Console {
         }
     }
         private void uiPrintAllRentalsSorted () {
-            Sort sort = new Sort( "Day").and(new Sort(Sort.Direction.DESC, "Month"));
-            sort.setClassName("Rental");
+            Sort sort = Sort.by( "Day").ascending().and(Sort.by("Month").descending());
             rentalService.getAllRentalsSorted(sort).forEach(System.out::println);
         }
 
