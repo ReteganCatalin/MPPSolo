@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="postgres@localhost">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.18">
+    <root id="1">
+      <ServerVersion>12.2</ServerVersion>
+      <StartupTime>1585924588</StartupTime>
+    </root>
+    <database id="2" parent="1" name="MPP">
+      <ObjectId>26493</ObjectId>
+      <Owner>Catalin</Owner>
+    </database>
+    <database id="3" parent="1" name="SG">
+      <ObjectId>17940</ObjectId>
+      <Owner>sgcod14</Owner>
+    </database>
+    <database id="4" parent="1" name="postgres">
+      <ObjectId>13318</ObjectId>
+      <Comment>default administrative connection database</Comment>
+      <Owner>postgres</Owner>
+      <IntrospectionStateNumber>4238</IntrospectionStateNumber>
+      <Current>1</Current>
+    </database>
+    <database id="5" parent="1" name="tabby">
+      <ObjectId>16394</ObjectId>
+      <Owner>tabbycat</Owner>
+    </database>
+    <role id="6" parent="1" name="Cata">
+      <ObjectId>26137</ObjectId>
+      <SuperRole>1</SuperRole>
+      <CreateDb>1</CreateDb>
+      <CreateRole>1</CreateRole>
+      <CanLogin>1</CanLogin>
+    </role>
+    <role id="7" parent="1" name="Catalin">
+      <ObjectId>26136</ObjectId>
+      <SuperRole>1</SuperRole>
+      <CreateDb>1</CreateDb>
+      <CreateRole>1</CreateRole>
+      <CanLogin>1</CanLogin>
+    </role>
+    <role id="8" parent="1" name="pg_execute_server_program">
+      <ObjectId>4571</ObjectId>
+    </role>
+    <role id="9" parent="1" name="pg_monitor">
+      <ObjectId>3373</ObjectId>
+    </role>
+    <role id="10" parent="1" name="pg_read_all_settings">
+      <ObjectId>3374</ObjectId>
+    </role>
+    <role id="11" parent="1" name="pg_read_all_stats">
+      <ObjectId>3375</ObjectId>
+    </role>
+    <role id="12" parent="1" name="pg_read_server_files">
+      <ObjectId>4569</ObjectId>
+    </role>
+    <role id="13" parent="1" name="pg_signal_backend">
+      <ObjectId>4200</ObjectId>
+    </role>
+    <role id="14" parent="1" name="pg_stat_scan_tables">
+      <ObjectId>3377</ObjectId>
+    </role>
+    <role id="15" parent="1" name="pg_write_server_files">
+      <ObjectId>4570</ObjectId>
+    </role>
+    <role id="16" parent="1" name="postgres">
+      <ObjectId>10</ObjectId>
+      <SuperRole>1</SuperRole>
+      <CreateDb>1</CreateDb>
+      <CreateRole>1</CreateRole>
+      <CanLogin>1</CanLogin>
+      <Replication>1</Replication>
+      <BypassRls>1</BypassRls>
+    </role>
+    <role id="17" parent="1" name="sgcod14">
+      <ObjectId>17939</ObjectId>
+      <SuperRole>1</SuperRole>
+      <CreateDb>1</CreateDb>
+      <CreateRole>1</CreateRole>
+      <CanLogin>1</CanLogin>
+    </role>
+    <role id="18" parent="1" name="tabbycat">
+      <ObjectId>16393</ObjectId>
+      <CanLogin>1</CanLogin>
+    </role>
+  </database-model>
+</dataSource>

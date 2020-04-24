@@ -33,3 +33,23 @@
 2020-04-14T11:56:19,135 TRACE [main]: ClientService                        - getAllClients - method finished 
 2020-04-14T11:56:32,927 TRACE [main]: ClientService                        - getAllClientsSorted - method entered sort=FirstName: ASC,LastName: ASC,Age: DESC 
 2020-04-14T11:56:32,945 TRACE [main]: ClientService                        - getAllClientsSorted - method finished 
+2020-04-14T15:48:06,796 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-14T15:48:07,035 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-14T15:48:51,817 TRACE [main]: ClientService                        - deleteClient - method entered: client=666 
+2020-04-14T15:48:51,946 DEBUG [main]: ClientService                        - deleteClient - deleted: deletedFirst Name: 'Bagabontu', Last Name: 'Tau', Age: 123, ID: '666' 
+2020-04-14T15:48:51,946 TRACE [main]: ClientService                        - deleteClient - method finished 
+2020-04-14T15:48:54,815 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-14T15:48:54,820 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-14T15:51:21,375 TRACE [main]: ClientService                        - addClient - method entered: client=First Name: 'Ed', Last Name: 'Edward', Age: 12, ID: '0' 
+2020-04-14T15:51:21,554 DEBUG [main]: ClientService                        - addClient - added: client=First Name: 'Ed', Last Name: 'Edward', Age: 12, ID: '0' 
+2020-04-14T15:51:21,555 TRACE [main]: ClientService                        - addClient - method finished 
+2020-04-14T15:51:31,363 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-14T15:51:31,498 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-14T15:51:57,378 TRACE [main]: MovieService                         - getAllMovies - method entered 
+2020-04-14T15:51:57,418 TRACE [main]: MovieService                         - getAllMovies - method finished 
+2020-04-14T16:15:24,900 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-14T16:15:25,096 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-14T16:18:18,928 TRACE [main]: ClientService                        - deleteClient - method entered: client=77 
+2020-04-14T16:18:18,959 DEBUG [main]: ClientService                        - deleteClient - deleted: deletedFirst Name: 'John', Last Name: 'John', Age: 58, ID: '77' 
+2020-04-14T16:18:18,960 TRACE [main]: ClientService                        - deleteClient - method finished 
+2020-04-23T19:57:54,975 WARN  [main]: AnnotationConfigApplicationContext   - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'console': Unsatisfied dependency expressed through field 'clientService'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'core.service.ClientServiceInterface' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)} 
