@@ -42,20 +42,20 @@ public class ClientController {
 
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
     void saveClient(@RequestBody ClientDto clientDto) {
-        log.trace("Method saveClients entered with ClientDto {}",clientDto);
+        log.trace("Method saveClient entered with ClientDto {}",clientDto);
         clientService.addClient(clientConverter.convertDtoToModel(clientDto));
     }
 
     @RequestMapping(value = "/clients", method = RequestMethod.PUT)
     ClientDto updateClient(@RequestBody ClientDto clientDto) {
-        log.trace("Method updateClients entered with ClientDto {}",clientDto);
+        log.trace("Method updateClient entered with ClientDto {}",clientDto);
         return clientConverter.convertModelToDto( clientService.updateClient(
                 clientConverter.convertDtoToModel(clientDto)));
     }
 
     @RequestMapping(value = "/clients/{id}", method = RequestMethod.DELETE)
-    ResponseEntity<?> deleteStudent(@PathVariable Long id){
-        log.trace("Method deleteClients entered with id {}",id);
+    ResponseEntity<?> deleteClient(@PathVariable Long id){
+        log.trace("Method deleteClient entered with id {}",id);
         clientService.deleteClient(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

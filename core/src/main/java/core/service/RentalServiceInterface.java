@@ -23,5 +23,5 @@ public interface RentalServiceInterface {
 
     Set<Rental> filterRentalsByYear(int year);
 
-    Set<Rental> statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan(int movie_year, int age);
+    Set<Rental> statRentals(int movie_year, int age);
 }

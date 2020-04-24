@@ -14,6 +14,7 @@ import web.converter.MovieConverter;
 import web.dto.*;
 import web.dto.MoviesDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,28 +31,28 @@ public class MovieController {
 
     @RequestMapping(value = "/movies", method = RequestMethod.GET)
     MoviesDto getMovies() {
-        //todo: log
+        log.trace("Method getMovies entered");
         return new MoviesDto(movieConverter
-                .convertModelsToDtos(movieService.getAllMovies().stream().collect(Collectors.toList())));
+                .convertModelsToDtos(new ArrayList<>(movieService.getAllMovies())));
 
     }
 
     @RequestMapping(value = "/movies", method = RequestMethod.POST)
-    void saveMovie(@RequestBody MovieDto MovieDto) {
-        //todo log
-        movieService.addMovie(movieConverter.convertDtoToModel(MovieDto));
+    void saveMovie(@RequestBody MovieDto movieDto) {
+        log.trace("Method saveMovie entered with movieDto = {}",movieDto);
+        movieService.addMovie(movieConverter.convertDtoToModel(movieDto));
     }
 
     @RequestMapping(value = "/movies", method = RequestMethod.PUT)
-    MovieDto updateMovie(@RequestBody MovieDto MovieDto) {
-        //todo: log
+    MovieDto updateMovie(@RequestBody MovieDto movieDto) {
+        log.trace("Method updateMovie entered with movieDto {}",movieDto);
         return movieConverter.convertModelToDto( movieService.updateMovie(
-                movieConverter.convertDtoToModel(MovieDto)));
+                movieConverter.convertDtoToModel(movieDto)));
     }
 
     @RequestMapping(value = "/movies/{id}", method = RequestMethod.DELETE)
-    ResponseEntity<?> deleteStudent(@PathVariable Long id){
-        //todo:log
+    ResponseEntity<?> deleteMovie(@PathVariable Long id){
+        log.trace("Method deleteMovie entered with id {}",id);
 
         movieService.deleteMovie(id);
 

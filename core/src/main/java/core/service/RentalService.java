@@ -163,8 +163,8 @@ public class RentalService implements RentalServiceInterface {
         return filteredRentals;
     }
 
-    public Set<Rental> statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan(int movie_year, int age){
-        log.trace("statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method entered movie_year={},age={}",movie_year,age);
+    public Set<Rental> statRentals(int movie_year, int age){
+        log.trace("statRentals - method entered movie_year={},age={}",movie_year,age);
         List<Client> ClientList=clientServ.getAllClients().stream().filter(client->client.getAge()>=age).collect(Collectors.toList());
         List<Movie> MovieList=movieServ.getAllMovies().stream().filter(movie->movie.getYearOfRelease()==movie_year).collect(Collectors.toList());
         List<Rental> rentalsList = StreamSupport.stream(RentalRepository.findAll().spliterator(),false)
@@ -183,7 +183,7 @@ public class RentalService implements RentalServiceInterface {
         Set<Rental> filteredRentals = rentalsList.stream()
                 .filter(rental -> rental.getMovieID().equals(mostRentedMovie))
                 .collect(Collectors.toSet());
-        log.trace("statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method finished");
+        log.trace("statRentals - method finished");
 
         return filteredRentals;
     }

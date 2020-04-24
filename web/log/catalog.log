@@ -1,0 +1,55 @@
+
+2020-04-12T17:19:36,304 WARN  [main]: SqlExceptionHelper                   - SQL Error: 0, SQLState: 23505 
+2020-04-12T17:19:36,307 ERROR [main]: SqlExceptionHelper                   - ERROR: duplicate key value violates unique constraint "client_pkey"
+  Detail: Key (id)=(4) already exists. 
+2020-04-12T17:27:40,085 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-12T17:27:40,240 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-12T17:27:42,084 TRACE [main]: ClientService                        - getAllClientsSorted - method entered sort=repository.Sort@53dba9cd 
+2020-04-12T17:27:42,095 TRACE [main]: ClientService                        - getAllClientsSorted - method finished 
+2020-04-12T17:27:55,087 TRACE [main]: RentalService                        - statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method entered movie_year=2000,age=12 
+2020-04-12T17:27:55,088 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-12T17:27:55,093 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-12T17:27:55,094 TRACE [main]: MovieService                         - getAllMovies - method entered 
+2020-04-12T17:27:55,101 TRACE [main]: MovieService                         - getAllMovies - method finished 
+2020-04-12T17:31:35,724 TRACE [main]: RentalService                        - statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method entered movie_year=2000,age=12 
+2020-04-12T17:31:35,728 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-12T17:31:35,876 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-12T17:31:35,877 TRACE [main]: MovieService                         - getAllMovies - method entered 
+2020-04-12T17:31:35,884 TRACE [main]: MovieService                         - getAllMovies - method finished 
+2020-04-12T17:31:51,727 TRACE [main]: RentalService                        - getAllRentals - method entered 
+2020-04-12T17:31:51,732 TRACE [main]: RentalService                        - getAllRentals - method finished 
+2020-04-12T17:32:10,738 TRACE [main]: MovieService                         - getAllMovies - method entered 
+2020-04-12T17:32:10,742 TRACE [main]: MovieService                         - getAllMovies - method finished 
+2020-04-12T17:32:27,745 TRACE [main]: RentalService                        - statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method entered movie_year=2015,age=1 
+2020-04-12T17:32:27,745 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-12T17:32:27,750 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-12T17:32:27,751 TRACE [main]: MovieService                         - getAllMovies - method entered 
+2020-04-12T17:32:27,754 TRACE [main]: MovieService                         - getAllMovies - method finished 
+2020-04-12T17:32:27,758 TRACE [main]: RentalService                        - statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan - method finished 
+2020-04-12T17:33:39,785 TRACE [main]: RentalService                        - addRental - method entered: rental=Rental ID: '7', Client ID: '1', Movie ID: '11', Year: '2020', Month: '1', Day: '1' 
+2020-04-12T17:33:40,194 DEBUG [main]: RentalService                        - addRental - delete: added=Rental ID: '7', Client ID: '1', Movie ID: '11', Year: '2020', Month: '1', Day: '1' 
+2020-04-12T17:33:40,194 TRACE [main]: RentalService                        - addRental - method finished 
+2020-04-14T11:56:18,917 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-14T11:56:19,135 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-14T11:56:32,927 TRACE [main]: ClientService                        - getAllClientsSorted - method entered sort=FirstName: ASC,LastName: ASC,Age: DESC 
+2020-04-14T11:56:32,945 TRACE [main]: ClientService                        - getAllClientsSorted - method finished 
+2020-04-14T15:48:06,796 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-14T15:48:07,035 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-14T15:48:51,817 TRACE [main]: ClientService                        - deleteClient - method entered: client=666 
+2020-04-14T15:48:51,946 DEBUG [main]: ClientService                        - deleteClient - deleted: deletedFirst Name: 'Bagabontu', Last Name: 'Tau', Age: 123, ID: '666' 
+2020-04-14T15:48:51,946 TRACE [main]: ClientService                        - deleteClient - method finished 
+2020-04-14T15:48:54,815 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-14T15:48:54,820 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-14T15:51:21,375 TRACE [main]: ClientService                        - addClient - method entered: client=First Name: 'Ed', Last Name: 'Edward', Age: 12, ID: '0' 
+2020-04-14T15:51:21,554 DEBUG [main]: ClientService                        - addClient - added: client=First Name: 'Ed', Last Name: 'Edward', Age: 12, ID: '0' 
+2020-04-14T15:51:21,555 TRACE [main]: ClientService                        - addClient - method finished 
+2020-04-14T15:51:31,363 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-14T15:51:31,498 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-14T15:51:57,378 TRACE [main]: MovieService                         - getAllMovies - method entered 
+2020-04-14T15:51:57,418 TRACE [main]: MovieService                         - getAllMovies - method finished 
+2020-04-14T16:15:24,900 TRACE [main]: ClientService                        - getAllClients - method entered 
+2020-04-14T16:15:25,096 TRACE [main]: ClientService                        - getAllClients - method finished 
+2020-04-14T16:18:18,928 TRACE [main]: ClientService                        - deleteClient - method entered: client=77 
+2020-04-14T16:18:18,959 DEBUG [main]: ClientService                        - deleteClient - deleted: deletedFirst Name: 'John', Last Name: 'John', Age: 58, ID: '77' 
+2020-04-14T16:18:18,960 TRACE [main]: ClientService                        - deleteClient - method finished 
+2020-04-23T19:57:54,975 WARN  [main]: AnnotationConfigApplicationContext   - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'console': Unsatisfied dependency expressed through field 'clientService'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'core.service.ClientServiceInterface' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)} 

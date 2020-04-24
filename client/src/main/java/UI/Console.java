@@ -18,6 +18,7 @@ import web.dto.*;
 import web.dto.StatMoviesDto;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -178,7 +179,9 @@ public class Console {
             throw new DataTypeException();
         }
         try {
-            //rentalService.filterRentalsByYear(year).forEach(System.out::println);
+            RentalsDto rentals=restTemplate.getForObject(baseURL+"/filterRentals/{year}",RentalsDto.class,year);
+            rentals.getClients().forEach(rental->{Rental real_rental= rentalConverter.convertDtoToModel(rental);
+                System.out.println(real_rental);});
         } catch (MyException e) {
             System.out.println(e.getMessage());
         }
@@ -310,16 +313,31 @@ public class Console {
         } catch (NumberFormatException e) {
             throw new DataTypeException();
         }
-//       // Set<Rental> rentals = rentalService.statMostRentedMovieReleasedThatYearRentalsByClientsAgedMoreThan(release_year, age);
-//        System.out.println("Most rented Movie of the year " + yearString + " " + movieService.FindOne(rentals.iterator().next().getMovieID()).get().getTitle());
-//        System.out.println("The rental months of the most rented movie by clients older than:" + ageString + " years");
-//        rentals.stream()
-//                .map(rental -> rental.getMonth())
-//                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-//                .entrySet()
-//                .stream()
-//                .sorted(((o1, o2) -> -1 * o1.getValue().compareTo(o2.getValue())))
-//                .forEach(entity -> System.out.println(entity.getKey()));
+        StatRentalDto properties=StatRentalDto.builder().ClientLeastAge(age).YearOfRelease(release_year).build();
+        RentalsDto rentals=restTemplate.postForObject(baseURL+"/statRentals",properties,RentalsDto.class);
+        MoviesDto movies=restTemplate.getForObject(
+                baseURL+"/movies"
+                , MoviesDto.class);
+        List<MovieDto> movieDto =movies.getClients();
+        String title="";
+        for(int index=0;index<movieDto.size();index++)
+        {
+            if(movieDto.get(index).getId().equals(rentals.getClients().get(0).getMovieID()))
+            {
+                title=movieDto.get(index).getTitle();
+            }
+
+        }
+
+        System.out.println("Most rented Movie of the year " + yearString + " " + title);
+        System.out.println("The rental months of the most rented movie by clients older than:" + ageString + " years");
+        rentals.getClients().stream()
+                .map(rental -> rental.getMonth())
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet()
+                .stream()
+                .sorted(((o1, o2) -> -1 * o1.getValue().compareTo(o2.getValue())))
+                .forEach(entity -> System.out.println(entity.getKey()));
     }
 
     private void uiUpdateMovie() {
@@ -404,9 +422,11 @@ public class Console {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Input Movie Title: ");
-        String name = scanner.nextLine();
+        String title = scanner.nextLine();
         try {
-           // movieService.filterMoviesByTitle(name).forEach(System.out::println);
+            MoviesDto movies=restTemplate.getForObject(baseURL+"/filterMovies/{title}",MoviesDto.class,title);
+            movies.getClients().forEach(movie->{Movie real_movie= movieConverter.convertDtoToModel(movie);
+                System.out.println(real_movie);});
         } catch (MyException e) {
             System.out.println(e.getMessage());
         }
@@ -431,7 +451,6 @@ public class Console {
         columns.add("LastName");
         columns.add("Age");
         SortDto sortDto=SortDto.builder().Directions(directions).Columns(columns).build();
-        System.out.println(sortDto);
         ClientsDto clients=restTemplate.postForObject(
                 baseURL+"/sortClients",
                 sortDto,
@@ -444,7 +463,8 @@ public class Console {
     private void uiPrintAllMoviesSorted() {
         List<String> criterias = Arrays.asList("Id", "MainStar", "Title", "Genre", "YearOfRelease", "Director");
         Scanner scanner = new Scanner(System.in);
-        Sort sort = null;
+        List<String> directions=new ArrayList<>();
+        List<String> columns=new ArrayList<>();
         try {
             while (true) {
 
@@ -454,21 +474,13 @@ public class Console {
                     System.out.println("Wrong column next time be more careful !");
                     break;
                 }
-                System.out.println("Pick order DESC or ASC: ");
+                System.out.println("Pick order Desc or Asc: ");
                 String order = scanner.nextLine();
-                if (order.equals("done")) break;
-                if (order.equals("ASC")) {
-                    if (sort == null) {
-                        sort = Sort.by(columnName).ascending();
-                    } else {
-                        sort = sort.and(Sort.by(columnName).descending());
-                    }
-                } else if (order.equals("DESC")) {
-                    if (sort == null) {
-                        sort = Sort.by(columnName).ascending();
-                    } else {
-                        sort = sort.and(Sort.by(columnName).descending());
-                    }
+                if (order.equals("done")){ break;}
+                else if(order.equals("Asc") || order.equals("Desc"))
+                {
+                    directions.add(order);
+                    columns.add(columnName);
                 } else {
                     System.out.println("Wrong input!");
                     break;
@@ -476,14 +488,29 @@ public class Console {
 
 
             }
-            //movieService.getAllMoviesSorted(sort).forEach(System.out::println);
+            SortDto sort=SortDto.builder().Columns(columns).Directions(directions).build();
+            MoviesDto movies=restTemplate.postForObject(baseURL+"/sortedMovies",sort,MoviesDto.class);
+            movies.getClients().forEach(movie->{Movie real_movie= movieConverter.convertDtoToModel(movie);
+                System.out.println(real_movie);});
         } catch (MyException e) {
             System.out.println(e.getMessage());
         }
     }
         private void uiPrintAllRentalsSorted () {
-            Sort sort = Sort.by( "Day").ascending().and(Sort.by("Month").descending());
-            //rentalService.getAllRentalsSorted(sort).forEach(System.out::println);
+            //Sort sort = Sort.by( "Day").ascending().and(Sort.by("Month").descending());
+            List<String> directions=new ArrayList<>();
+            directions.add("Asc");
+            directions.add("Desc");
+            List<String> columns=new ArrayList<>();
+            columns.add("Day");
+            columns.add("Month");
+            SortDto sortDto=SortDto.builder().Directions(directions).Columns(columns).build();
+            RentalsDto rentals=restTemplate.postForObject(
+                    baseURL+"/sortRentals",
+                    sortDto,
+                    RentalsDto.class);
+            rentals.getClients().forEach(rental->{Rental real_rental= rentalConverter.convertDtoToModel(rental);
+                System.out.println(real_rental);});
         }
 
         private void uiDeleteMovie () {
