@@ -33,34 +33,35 @@ public class ClientController {
 
 
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
-    ClientsDto getClients() {
+    List<ClientDto> getClients() {
         log.trace("Method getClients entered");
-        return new ClientsDto(clientConverter
-                .convertModelsToDtos(new ArrayList<>(clientService.getAllClients())));
+        return clientConverter
+                .convertModelsToDtos(new ArrayList<>(clientService.getAllClients()));
 
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
     void saveClient(@RequestBody ClientDto clientDto) {
         log.trace("Method saveClient entered with ClientDto {}",clientDto);
         clientService.addClient(clientConverter.convertDtoToModel(clientDto));
     }
-
-    @RequestMapping(value = "/clients", method = RequestMethod.PUT)
-    ClientDto updateClient(@RequestBody ClientDto clientDto) {
+    @CrossOrigin
+    @RequestMapping(value = "/clients/{id}", method = RequestMethod.PUT)
+    ClientDto updateClient(@PathVariable Long id,@RequestBody ClientDto clientDto) {
         log.trace("Method updateClient entered with ClientDto {}",clientDto);
         return clientConverter.convertModelToDto( clientService.updateClient(
                 clientConverter.convertDtoToModel(clientDto)));
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/clients/{id}", method = RequestMethod.DELETE)
     ResponseEntity<?> deleteClient(@PathVariable Long id){
         log.trace("Method deleteClient entered with id {}",id);
         clientService.deleteClient(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @CrossOrigin
     @RequestMapping(value ="/sortClients",method=RequestMethod.POST )
-    ClientsDto getSortedClients(@RequestBody SortDto sorted)
+    List<ClientDto> getSortedClients(@RequestBody SortDto sorted)
     {
         log.trace("Method getSortedClients entered");
         List<String> directions=sorted.getDirections();
@@ -84,22 +85,22 @@ public class ClientController {
             }
         }
         log.trace("Method getClientsSorted sort {} created", sort);
-        return new ClientsDto(clientConverter.convertModelsToDtos(clientService.getAllClientsSorted(sort)));
+        return clientConverter.convertModelsToDtos(clientService.getAllClientsSorted(sort));
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/filterClients/{name}", method=RequestMethod.GET)
-    ClientsDto getFilteredClients(@PathVariable String name)
+    List<ClientDto> getFilteredClients(@PathVariable String name)
     {
         log.trace("Method getFilteredClients entered with Path Variable: name {}"+name);
-        return new ClientsDto(clientConverter
-                .convertModelsToDtos(clientService.filterClientsByName(name)));
+        return clientConverter
+                .convertModelsToDtos(clientService.filterClientsByName(name));
     }
 
     @RequestMapping(value= "/statClients",method=RequestMethod.GET)
-    ClientsDto getStatClients()
+    List<ClientDto> getStatClients()
     {
         log.trace("Method getStatClients entered");
-        return new ClientsDto(clientConverter
-                .convertModelsToDtos(clientService.statOldestClients()));
+        return clientConverter
+                .convertModelsToDtos(clientService.statOldestClients());
     }
 }

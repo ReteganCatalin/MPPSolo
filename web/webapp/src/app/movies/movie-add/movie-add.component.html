@@ -1,0 +1,29 @@
+<label>Title:
+  <input #title/>
+  <br/>
+</label>
+<label>Genre:
+  <input #genre/>
+  <br/>
+</label>
+
+<label>Director:
+  <input #director/>
+  <br/>
+</label>
+
+<label>Main Star:
+  <input #mainStar/>
+  <br/>
+</label>
+
+<label>Year Of Release:
+  <input #yearOfRelease/>
+  <br/>
+</label>
+
+<button (click)="saveMovie(title.value,director.value, genre.value, mainStar.value,yearOfRelease.value)">
+  Save
+</button>
+
+

@@ -30,26 +30,26 @@ public class MovieController {
 
 
     @RequestMapping(value = "/movies", method = RequestMethod.GET)
-    MoviesDto getMovies() {
+    List<MovieDto> getMovies() {
         log.trace("Method getMovies entered");
-        return new MoviesDto(movieConverter
-                .convertModelsToDtos(new ArrayList<>(movieService.getAllMovies())));
+        return movieConverter
+                .convertModelsToDtos(new ArrayList<>(movieService.getAllMovies()));
 
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/movies", method = RequestMethod.POST)
     void saveMovie(@RequestBody MovieDto movieDto) {
         log.trace("Method saveMovie entered with movieDto = {}",movieDto);
         movieService.addMovie(movieConverter.convertDtoToModel(movieDto));
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/movies", method = RequestMethod.PUT)
     MovieDto updateMovie(@RequestBody MovieDto movieDto) {
         log.trace("Method updateMovie entered with movieDto {}",movieDto);
         return movieConverter.convertModelToDto( movieService.updateMovie(
                 movieConverter.convertDtoToModel(movieDto)));
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/movies/{id}", method = RequestMethod.DELETE)
     ResponseEntity<?> deleteMovie(@PathVariable Long id){
         log.trace("Method deleteMovie entered with id {}",id);
@@ -58,9 +58,9 @@ public class MovieController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @CrossOrigin
     @RequestMapping(value ="/sortMovies",method=RequestMethod.POST )
-    MoviesDto getSortedMovies(@RequestBody SortDto sorted)
+    List<MovieDto> getSortedMovies(@RequestBody SortDto sorted)
     {
         log.trace("Method getSortedMovies entered");
         List<String> directions=sorted.getDirections();
@@ -84,15 +84,15 @@ public class MovieController {
             }
         }
         log.trace("Method getMoviesSorted sort {} created", sort);
-        return new MoviesDto(movieConverter.convertModelsToDtos(movieService.getAllMoviesSorted(sort)));
+        return movieConverter.convertModelsToDtos(movieService.getAllMoviesSorted(sort));
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/filterMovies/{title}", method=RequestMethod.GET)
-    MoviesDto getFilteredMovies(@PathVariable String title)
+    List<MovieDto> getFilteredMovies(@PathVariable String title)
     {
         log.trace("Method getFilteredMovies entered with Path Variable: title {}"+title);
-        return new MoviesDto(movieConverter
-                .convertModelsToDtos(movieService.filterMoviesByTitle(title)));
+        return movieConverter
+                .convertModelsToDtos(movieService.filterMoviesByTitle(title));
     }
 
     @RequestMapping(value= "/statMovies",method=RequestMethod.GET)

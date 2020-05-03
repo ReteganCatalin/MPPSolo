@@ -28,26 +28,26 @@ public class RentalController {
 
 
     @RequestMapping(value = "/rentals", method = RequestMethod.GET)
-    RentalsDto getRentals() {
+    List<RentalDto> getRentals() {
         //todo: log
-        return new RentalsDto(rentalConverter
-                .convertModelsToDtos(rentalService.getAllRentals().stream().collect(Collectors.toList())));
+        return rentalConverter
+                .convertModelsToDtos(rentalService.getAllRentals().stream().collect(Collectors.toList()));
 
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/rentals", method = RequestMethod.POST)
     void saveRental(@RequestBody RentalDto RentalDto) {
         //todo log
         rentalService.addRental(rentalConverter.convertDtoToModel(RentalDto));
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/rentals", method = RequestMethod.PUT)
     RentalDto updateRental(@RequestBody RentalDto RentalDto) {
         //todo: log
         return rentalConverter.convertModelToDto( rentalService.updateRental(
                 rentalConverter.convertDtoToModel(RentalDto)));
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/rentals/{id}", method = RequestMethod.DELETE)
     ResponseEntity<?> deleteRental(@PathVariable Long id){
         log.trace("Method deleteRental entered with id {}",id);
@@ -56,9 +56,9 @@ public class RentalController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @CrossOrigin
     @RequestMapping(value ="/sortRentals",method=RequestMethod.POST )
-    RentalsDto getSortedRentals(@RequestBody SortDto sorted)
+    List<RentalDto> getSortedRentals(@RequestBody SortDto sorted)
     {
         log.trace("Method getSortedRentals entered");
         List<String> directions=sorted.getDirections();
@@ -82,23 +82,23 @@ public class RentalController {
             }
         }
         log.trace("Method getRentalsSorted sort {} created", sort);
-        return new RentalsDto(rentalConverter.convertModelsToDtos(rentalService.getAllRentalsSorted(sort)));
+        return rentalConverter.convertModelsToDtos(rentalService.getAllRentalsSorted(sort));
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/filterRentals/{year}", method=RequestMethod.GET)
-    RentalsDto getFilteredRentals(@PathVariable Integer year)
+    List<RentalDto> getFilteredRentals(@PathVariable Integer year)
     {
         log.trace("Method getFilteredRentals entered with Path Variable: year {}"+year);
-        return new RentalsDto(rentalConverter
-                .convertModelsToDtos(rentalService.filterRentalsByYear(year)));
+        return rentalConverter
+                .convertModelsToDtos(rentalService.filterRentalsByYear(year));
     }
 
     @RequestMapping(value= "/statRentals",method=RequestMethod.POST)
-    RentalsDto getStatRentals(@RequestBody StatRentalDto properties)
+    List<RentalDto> getStatRentals(@RequestBody StatRentalDto properties)
     {
         log.trace("Method getStatRentals entered with properties={}",properties.toString());
 
-        return new RentalsDto(rentalConverter
-                .convertModelsToDtos(rentalService.statRentals(properties.getYearOfRelease(),properties.getClientLeastAge())));
+        return rentalConverter
+                .convertModelsToDtos(rentalService.statRentals(properties.getYearOfRelease(),properties.getClientLeastAge()));
     }
 }

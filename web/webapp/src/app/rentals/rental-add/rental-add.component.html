@@ -1,0 +1,29 @@
+<label>ClientID:
+  <input #clientID/>
+  <br/>
+</label>
+<label>MovieID:
+  <input #movieID/>
+  <br/>
+</label>
+
+<label>Day:
+  <input #day/>
+  <br/>
+</label>
+
+<label>Month:
+  <input #month/>
+  <br/>
+</label>
+
+<label>Year:
+  <input #year/>
+  <br/>
+</label>
+
+<button (click)="saveRental(clientID.value,movieID.value, day.value, month.value,year.value)">
+  Save
+</button>
+
+
