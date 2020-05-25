@@ -24,6 +24,6 @@ public interface MovieRepository extends IRepository<Movie, Long> {
 
     @Query("select movie from Movie movie where movie.id=:movieID")
     @EntityGraph(value = "movieWithRentalsAndClient", type =
-            EntityGraph.EntityGraphType.FETCH)
+            EntityGraph.EntityGraphType.LOAD)
     Optional<Movie> findByIDWithRentals(@Param("movieID") Long movieID);
 }

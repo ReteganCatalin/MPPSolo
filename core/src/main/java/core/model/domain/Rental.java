@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true,exclude = {"client", "movie"})
-@ToString(callSuper = true,exclude = {"client", "movie"})
+@ToString(callSuper=true,exclude = {"client", "movie"})
 @Builder
 public class Rental extends BaseEntity<Long> {
 

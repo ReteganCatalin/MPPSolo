@@ -143,27 +143,14 @@ public class RentalService implements RentalServiceInterface {
      * @throws MyException
      *             if there is no entity to be deleted.
      */
-    @Transactional
+    //@Transactional
     public void deleteRental(Long id) throws ValidatorException
     {
         log.trace("deleteRental - method entered: id={}", id);
-        Optional<Rental> rentalOptional =
-                movieRepository.findAllWithRentals().stream()
-                        .map(elem -> elem.getRentals())
-                        .flatMap(elem -> elem.stream())
-                        .filter(elem -> elem.getId().equals(id))
-                        .findFirst();
-        rentalOptional.ifPresent(
-                elem -> {
-                    Optional<Client> client =
-                            clientRepository.findByIDWithRentals(elem.getClient().getId());
-                    client.ifPresent(cli -> cli.getRentals().remove(elem));
-                });
-        rentalOptional.ifPresent(elem -> {
-            Optional<Movie> movie =
-                    movieRepository.findByIDWithRentals(elem.getMovie().getId());
-            movie.ifPresent(mov -> mov.getRentals().remove(elem));
-        });
+        entityManager.getTransaction().begin();
+        Rental rent= entityManager.find(Rental.class, id);
+        entityManager.remove(rent);
+        entityManager.getTransaction().commit();
         log.trace("deleteRental - method finished");
         return;
     }
