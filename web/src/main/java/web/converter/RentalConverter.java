@@ -1,18 +1,25 @@
 package web.converter;
 
+import core.model.domain.Client;
 import core.model.domain.Movie;
 import core.model.domain.Rental;
 import org.springframework.stereotype.Component;
-import web.dto.MovieDto;
 import web.dto.RentalDto;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Component
 public class RentalConverter extends BaseConverter<Rental, RentalDto> {
+
+    @PersistenceContext // or even @Autowired
+    private EntityManager entityManager;
+
     @Override
     public Rental convertDtoToModel(RentalDto dto) {
         Rental rental = Rental.builder()
-                .ClientID(dto.getClientID())
-                .MovieID(dto.getMovieID())
+                .client(entityManager.getReference(Client.class, dto.getClientID()))
+                .movie(entityManager.getReference(Movie.class, dto.getMovieID()))
                 .day(dto.getDay())
                 .month(dto.getMonth())
                 .year(dto.getYear())
@@ -24,8 +31,8 @@ public class RentalConverter extends BaseConverter<Rental, RentalDto> {
     @Override
     public RentalDto convertModelToDto(Rental rental) {
         RentalDto dto = RentalDto.builder()
-                .ClientID(rental.getClientID())
-                .MovieID(rental.getMovieID())
+                .clientID(rental.getClient().getId())
+                .movieID(rental.getMovie().getId())
                 .day(rental.getDay())
                 .month(rental.getMonth())
                 .year(rental.getYear())

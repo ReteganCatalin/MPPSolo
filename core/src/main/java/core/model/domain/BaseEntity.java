@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
+
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor

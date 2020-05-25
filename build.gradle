@@ -24,6 +24,7 @@ allprojects {
         caffeineVersion = '2.6.1'
         hikariVersion = '2.7.7'
         jaxbapiVersion = '2.3.0'
+        guavaVersion = '21.0'
 
         jacksonDatabindVersion = '2.9.4'
 //        javaxServeletApiVersion = '3.1.0'
@@ -37,6 +38,7 @@ allprojects {
         testCompile group: 'junit', name: 'junit', version: '4.12'
 
         compile group: 'org.springframework', name: 'spring-context', version: "$springVersion"
+        compile group: 'org.springframework', name: 'spring-context-support', version: "$springVersion"
 
         //logging
         compile group: 'org.slf4j', name: 'slf4j-api', version: "$slf4jVersion"
@@ -45,6 +47,8 @@ allprojects {
         compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: "$log4jVersion"
         compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: "$log4jVersion"
         compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: "$log4jVersion"
+        compile group: 'com.google.guava', name: 'guava', version: "$guavaVersion"
+
 
         //lombok
 //        compile group: 'org.projectlombok', name: 'lombok', version: "$lombokVersion"

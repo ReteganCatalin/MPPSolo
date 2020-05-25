@@ -1,24 +1,31 @@
 package core.model.domain;
 
 import lombok.*;
-import org.hibernate.annotations.Proxy;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+
 
 @Entity
+@Table(name="rental")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true,exclude = {"client", "movie"})
+@ToString(callSuper = true,exclude = {"client", "movie"})
 @Builder
-@Proxy(lazy=false)
 public class Rental extends BaseEntity<Long> {
 
-    private Long ClientID;
-    private Long MovieID;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "clientid")
+    private Client client;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "movieid")
+    private  Movie movie;
+    @Column(name = "year", nullable = false)
     private int year;
+    @Column(name = "day", nullable = false)
     private int day;
+    @Column(name = "month", nullable = false)
     private int month;
 
 }

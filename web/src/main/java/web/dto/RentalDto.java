@@ -12,8 +12,8 @@ import lombok.*;
 @Builder
 public class RentalDto extends BaseDto {
 
-    private Long ClientID;
-    private Long MovieID;
+    private Long clientID;
+    private Long movieID;
     private int year;
     private int day;
     private int month;

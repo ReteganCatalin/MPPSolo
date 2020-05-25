@@ -1,26 +1,75 @@
-<label>Title:
-  <input #title/>
-  <br/>
-</label>
-<label>Genre:
-  <input #genre/>
-  <br/>
-</label>
+<form #formDir="ngForm" [formGroup]="movieForm">
+  <div [hidden]="formDir.submitted">
+    <div class="form-group">
+      <label for="title">Title&nbsp; </label>
+      <input class="form-control" formControlName="title" id="title" required>
+      <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert">
+        <div *ngIf="title.errors.required">
+          Title is required.
+        </div>
+        <div *ngIf="title.errors.pattern">
+          Title must consist only of upper/lower-case letters.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="genre">Genre &nbsp;</label>
+      <input class="form-control" formControlName="genre" id="genre" required>
+      <div *ngIf="genre.invalid && (genre.dirty || genre.touched)" class="alert">
+        <div *ngIf="genre.errors.required">
+          Genre is required.
+        </div>
+        <div *ngIf="genre.errors.pattern">
+          Genre must consist only of upper/lower-case letters.
+        </div>
+      </div>
+    </div>
+    <div [hidden]="formDir.submitted">
+      <div class="form-group">
+        <label for="mainStar">Main Star&nbsp; </label>
+        <input class="form-control" formControlName="mainStar" id="mainStar" required>
+        <div *ngIf="mainStar.invalid && (mainStar.dirty || mainStar.touched)" class="alert">
+          <div *ngIf="mainStar.errors.required">
+            Main Star is required.
+          </div>
+          <div *ngIf="mainStar.errors.pattern">
+            Main Star must consist only of upper/lower-case letters.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="director">Director &nbsp;</label>
+        <input class="form-control" formControlName="director" id="director" required>
+        <div *ngIf="director.invalid && (director.dirty || director.touched)" class="alert">
+          <div *ngIf="director.errors.required">
+            Director is required.
+          </div>
+          <div *ngIf="director.errors.pattern">
+            Director must consist only of upper/lower-case letters.
+          </div>
+        </div>
+      </div>
 
-<label>Director:
-  <input #director/>
-  <br/>
-</label>
+    <div class="form-group">
+      <label for="yearOfRelease">Year of Release &nbsp;</label>
+      <input class="form-control" formControlName="yearOfRelease" id="yearOfRelease" required>
+      <div *ngIf="yearOfRelease.invalid && (yearOfRelease.dirty || yearOfRelease.touched)" class="alert alert-danger">
+        <div *ngIf="yearOfRelease.errors.required">
+          YEar of Release is required.
+        </div>
+        <div *ngIf="yearOfRelease.errors.min">
+          Year Of Release must be greater or equal than 0.
+        </div>
+        <div *ngIf="yearOfRelease.errors.pattern">
+          Year of Release must consist only of digits.
+        </div>
+      </div>
+    </div>
 
-<label>Main Star:
-  <input #mainStar/>
-  <br/>
-</label>
 
-<label>Year Of Release:
-  <input #yearOfRelease/>
-  <br/>
-</label>
+  </div>
+  </div>
+</form>
 
 <button (click)="saveMovie(title.value,director.value, genre.value, mainStar.value,yearOfRelease.value)">
   Save

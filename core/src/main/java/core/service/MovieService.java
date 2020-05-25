@@ -8,10 +8,11 @@ import core.repository.MovieRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -134,15 +135,21 @@ public class MovieService implements MovieServiceInterface {
      * @param title a movie title of type {@code String}
      * @return {@code HashSet} containing all the Movie Instances from the repository that contain the title parameter in the title
      */
-    public Set<Movie> filterMoviesByTitle(String title)
+    public List<Movie> filterMoviesByTitle(String title)
     {
         log.trace("filterMoviesByTitle - method entered title={}",title);
-        Iterable<Movie> movies=repository.findAll();
-        Set<Movie> filteredMovies=new HashSet<>();
-        movies.forEach(filteredMovies::add);
-        filteredMovies.removeIf(movie->!(movie.getTitle().contains(title)) );
+        List<Movie> movies=repository.findMovieByName("title");
         log.trace("filterMoviesByTitle - method finished");
-        return filteredMovies;
+        return movies;
+    }
+    public List<Movie> paginatedMovies(Integer pageNo,Integer size)
+    {
+        log.trace("paginatedMovies - method entered with pageNo={} and size={}",pageNo,size);
+        PageRequest page=PageRequest.of(pageNo,size);
+        Page<Movie> movies=repository.findAll(page);
+
+        log.trace("paginatedClients - method finished clients={}",movies);
+        return movies.getContent();
     }
 
 

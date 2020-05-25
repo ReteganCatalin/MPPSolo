@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RentalService} from "../shared/rental.service";
 import {Location} from "@angular/common";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-rental-new',
@@ -8,13 +9,63 @@ import {Location} from "@angular/common";
   styleUrls: ['./rental-add.component.css']
 })
 export class RentalAddComponent implements OnInit {
-
+  rentalForm:FormGroup
   constructor(private rentalService: RentalService,
               private location: Location
   ) {
   }
 
   ngOnInit(): void {
+
+    this.rentalForm = new FormGroup({
+      'clientID': new FormControl("", [
+        Validators.required,
+        Validators.min(0),
+        Validators.pattern("^0$|^[1-9]+[0-9]*$")
+      ]),
+      'movieID': new FormControl("", [
+        Validators.required,
+        Validators.min(0),
+        Validators.pattern("^0$|^[1-9]+[0-9]*$")
+      ]),
+      'day': new FormControl("", [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(31),
+        Validators.pattern("^0$|^[1-9]+[0-9]*$")
+      ]),
+      'month': new FormControl("", [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(12),
+        Validators.pattern("^0$|^[1-9]+[0-9]*$")
+      ]),
+      'year': new FormControl("", [
+        Validators.required,
+        Validators.min(2000),
+        Validators.pattern("^0$|^[1-9]+[0-9]*$")
+      ])
+    });
+  }
+  get year() {
+    return this.rentalForm.get('year');
+  }
+  get month() {
+    return this.rentalForm.get('month');
+  }
+
+  get day() {
+    return this.rentalForm.get('day');
+  }
+
+  get clientID()
+  {
+    return this.rentalForm.get('clientID')
+  }
+
+  get movieID()
+  {
+    return this.rentalForm.get('movieID')
   }
 
   saveRental(clientID: string, movieID: string, day: string,month:string,year:string) {

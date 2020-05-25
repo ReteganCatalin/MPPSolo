@@ -8,11 +8,12 @@ import core.repository.ClientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -127,7 +128,7 @@ public class ClientService implements ClientServiceInterface {
         log.warn("getAllClientsSorted - method entered sort={}",sort);
         System.out.println(sort);
         Iterable<Client> sortedClients=repository.findAll(sort);
-        log.trace("getAllClientsSorted - method finished");
+        log.trace("getAllClientsSorted - method finished ",sortedClients);
         return StreamSupport.stream(sortedClients.spliterator(),false).collect(Collectors.toList());
     }
 
@@ -138,16 +139,24 @@ public class ClientService implements ClientServiceInterface {
      * @return {@code HashSet} containing all the Client Instances from the repository that contain the name parameter in the
      * first name or the last name
      */
-    public Set<Client> filterClientsByName(String name)
+    public List<Client> filterClientsByName(String name)
     {
         log.trace("filterClientsByName - method entered name={}",name);
-        Iterable<Client> clients=repository.findAll();
-        Set<Client> filteredClients=new HashSet<>();
-        clients.forEach(filteredClients::add);
-        filteredClients.removeIf(client->!(client.getLastName().contains(name) || client.getFirstName().contains(name)) );
-        log.trace("filterClientsByName - method finished filtered={}",filteredClients);
-        return filteredClients;
+        List<Client> clients=repository.findClientsByName(name);
+        log.trace("filterClientsByName - method finished filtered={}",clients);
+        return clients;
     }
+
+    public List<Client> paginatedClients(Integer pageNo,Integer size)
+    {
+        log.trace("paginatedClients - method entered with pageNo={} and size={}",pageNo,size);
+        PageRequest page=PageRequest.of(pageNo,size);
+        Page<Client> clients=repository.findAll(page);
+
+        log.trace("paginatedClients - method finished clients={}",clients);
+        return clients.getContent();
+    }
+
 
     public List<Client> statOldestClients(){
         log.trace("statOldestClients - method entered ");

@@ -12,7 +12,12 @@ import {RentalDetailComponent} from "./rentals/rental-detail/rental-detail.compo
 import {RentalAddComponent} from "./rentals/rental-add/rental-add.component";
 import {RentalFilterComponent} from "./rentals/rental-filter/rental-filter.component";
 import {ClientFilterComponent} from "./clients/client-filter/client-filter.component";
-
+import {ClientSortComponent} from "./clients/client-sort/client-sort.component";
+import {MovieSortComponent} from "./movies/movie-sort/movie-sort.component";
+import {ClientPaginatedComponent} from "./clients/client-paginated/client-paginated.component";
+import {MoviePaginatedComponent} from "./movies/movie-paginated/movie-paginated.component";
+import {RentalSortComponent} from "./rentals/rental-sort/rental-sort.component";
+import {RentalPaginatedComponent} from "./rentals/rental-paginated/rental-paginated.component";
 
 
 const routes: Routes = [
@@ -20,14 +25,21 @@ const routes: Routes = [
   {path: 'client/detail/:id', component: ClientDetailComponent},
   {path: 'client/add', component: ClientAddComponent},
   {path: 'client/filter', component: ClientFilterComponent},
+  {path: 'client/sort', component: ClientSortComponent},
+  {path: 'client/paginated', component: ClientPaginatedComponent},
   {path: 'movies', component: MoviesComponent},
   {path: 'movie/detail/:id', component: MovieDetailComponent},
   {path: 'movie/add', component: MovieAddComponent},
   {path: 'movie/filter', component: MovieFilterComponent},
+  {path: 'movie/sort', component:MovieSortComponent},
+  {path: 'movie/paginated', component: MoviePaginatedComponent},
   {path: 'rentals', component: RentalsComponent},
   {path: 'rental/detail/:id', component: RentalDetailComponent},
   {path: 'rental/add', component: RentalAddComponent},
   {path: 'rental/filter', component: RentalFilterComponent},
+  {path: 'rental/sort', component:RentalSortComponent},
+  {path: 'rental/paginated', component: RentalPaginatedComponent},
+
 
 
 ];

@@ -1,5 +1,6 @@
 package core.config;
 
+
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.postgresql.Driver;
@@ -19,11 +20,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-
 @Configuration
 @EnableJpaRepositories({"core.repository"})
 @EnableTransactionManagement
-//@EnableCaching
+// @EnableCaching
 public class JPAConfig {
 
     @Value("${db.jdbcUrl}")
@@ -57,6 +57,7 @@ public class JPAConfig {
         return dataSource;
     }
 
+
     @Bean
     public EntityManagerFactory entityManagerFactory() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -88,6 +89,4 @@ public class JPAConfig {
     public HibernateExceptionTranslator hibernateExceptionTranslator() {
         return new HibernateExceptionTranslator();
     }
-
-
 }

@@ -22,7 +22,10 @@ export class MovieFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterMovies("");
+    this.movieService.getMovies().subscribe(
+      movies=> this.movies=movies,
+      error => this.errorMessage = <any>error
+    );
   }
 
   filterMovies(title: string) {

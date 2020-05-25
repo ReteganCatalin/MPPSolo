@@ -1,7 +1,6 @@
 package web.controller;
 
 import core.model.domain.Movie;
-import core.service.MovieService;
 import core.service.MovieServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.converter.MovieConverter;
 import web.dto.*;
-import web.dto.MoviesDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,29 +56,29 @@ public class MovieController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @CrossOrigin
     @RequestMapping(value ="/sortMovies",method=RequestMethod.POST )
     List<MovieDto> getSortedMovies(@RequestBody SortDto sorted)
     {
         log.trace("Method getSortedMovies entered");
-        List<String> directions=sorted.getDirections();
-        List<String> columns=sorted.getColumns();
+        List<SortObjectDTO> sorts=sorted.getSort();
         Sort sort=null;
-        if(directions.get(0).equals("Asc")) {
-            sort = new Sort(columns.get(0)).ascending();
+        if(sorts.get(0).getDirection().equals("Asc")) {
+            sort = new Sort(sorts.get(0).getColumn()).ascending();
         }
         else
         {
-            sort = new Sort(columns.get(0)).descending();
+            sort = new Sort(sorts.get(0).getColumn()).descending();
         }
-        for(int index=1;index<directions.size();index++)
+        for(int index=1;index<sorts.size();index++)
         {
-            if(directions.get(index).equals("Asc")) {
-                sort.and(new Sort(columns.get(index)).ascending());
+            if(sorts.get(index).getDirection().equals("Asc")) {
+                sort=sort.and(new Sort(sorts.get(index).getColumn()).ascending());
             }
             else
             {
-                sort.and(new Sort(columns.get(index)).descending());
+                sort=sort.and(new Sort(sorts.get(index).getColumn()).descending());
             }
         }
         log.trace("Method getMoviesSorted sort {} created", sort);
@@ -93,6 +91,14 @@ public class MovieController {
         log.trace("Method getFilteredMovies entered with Path Variable: title {}"+title);
         return movieConverter
                 .convertModelsToDtos(movieService.filterMoviesByTitle(title));
+    }
+    @CrossOrigin
+    @RequestMapping(value = "/movies/get-page/pageno={pageNo},size={size}",method=RequestMethod.GET)
+    List<MovieDto> getPaginatedMovies(@PathVariable Integer pageNo,@PathVariable Integer size)
+    {
+        log.trace("Method getPaginatedMovies entered with Path Variable: pageNo {} and size {}",pageNo,size);
+        return movieConverter
+                .convertModelsToDtos(movieService.paginatedMovies(pageNo,size));
     }
 
     @RequestMapping(value= "/statMovies",method=RequestMethod.GET)

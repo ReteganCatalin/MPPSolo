@@ -18,8 +18,8 @@ public interface MovieServiceInterface {
     Set<Movie> getAllMovies();
 
     List<Movie> getAllMoviesSorted(Sort sort);
-    Set<Movie> filterMoviesByTitle(String title);
-
+    List<Movie> filterMoviesByTitle(String title);
+    List<Movie> paginatedMovies(Integer pageNo,Integer size);
 
     Map<Integer, List<Movie>> statMostRichYearsInMovies();
 }

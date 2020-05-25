@@ -22,5 +22,14 @@ export class MoviesComponent  {
   {
     this.router.navigate(["movie/filter"])
   }
+  sortMovies()
+  {
+    this.router.navigate(["movie/sort"])
+  }
+  paginatedMovies()
+  {
+    this.router.navigate(["movie/paginated"])
+  }
+
 
 }

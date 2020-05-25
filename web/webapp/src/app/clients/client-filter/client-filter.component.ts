@@ -22,7 +22,10 @@ export class ClientFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterClients("");
+    this.clientService.getClients().subscribe(
+      clients=> this.clients=clients,
+          error => this.errorMessage = <any>error
+    );
   }
 
   filterClients(name: string) {

@@ -19,11 +19,9 @@ public class RentalValidator implements Validator<Rental> {
      */
     @Override
     public void validate(Rental entity) throws ValidatorException {
-        Optional.ofNullable(entity.getId())
-                .orElseThrow(()-> new ValidatorException("Id is empty"));
-        Optional.ofNullable(entity.getClientID())
+        Optional.ofNullable(entity.getClient().getId())
                 .orElseThrow(()->new ValidatorException("Client ID is empty"));
-        Optional.ofNullable(entity.getMovieID())
+        Optional.ofNullable(entity.getMovie().getId())
                 .orElseThrow(()->new ValidatorException("Movie ID is empty"));
         Optional.ofNullable(entity.getYear())
                 .filter(e -> e > 1970 && e <= Year.now().getValue())

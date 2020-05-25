@@ -1,0 +1,54 @@
+<form>
+  <mat-form-field>
+    <mat-label>Select column you want to sort by</mat-label>
+    <select [(ngModel)]="selectedColumn" name="column">
+      <option>id</option>
+      <option>firstName</option>
+      <option>lastName</option>
+      <option>age</option>
+    </select>
+  </mat-form-field>
+  <p> Selected column: {{selectedColumn}} </p>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <select matNativeControl [(ngModel)]="selectedDirection" name="direction">
+      <option>Asc</option>
+      <option>Desc</option>
+    </select>
+  </mat-form-field>
+  <p> Selected Direction: {{selectedDirection}} </p>
+</form>
+
+
+<div *ngIf="selectedClient">
+  <h2>
+    {{selectedClient.id}} was selected
+  </h2>
+  <button (click)="gotoDetail()">View Details</button>
+</div>
+
+<button id="sortBack" (click)="goBack()">Back</button>
+<button id="sortDelete" (click)="sortDelete()">Delete</button>
+<button id="sortBuild" (click)="sortBuild()">Build</button>
+<button id="sort" (click)="sortClients()">
+  sort Clients
+</button>
+<div>
+<h2>Clients</h2>
+  <ol class="clients">
+  <li *ngFor="let client of clients "
+      [class.selected]="client === selectedClient"
+      (click)="onSelect(client)">
+    {{client.firstName}}
+
+    <button
+      [class.delete]="true"
+      (click)="deleteClient(client);$event.stopPropagation()">delete
+    </button>
+  </li>
+  </ol>
+</div>
+
+
+
+

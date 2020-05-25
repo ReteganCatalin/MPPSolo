@@ -18,9 +18,9 @@ public interface ClientServiceInterface {
     public Set<Client> getAllClients() ;
 
     public List<Client> getAllClientsSorted(Sort sort) ;
+    List<Client> paginatedClients(Integer pageNo,Integer size);
 
-
-    Set<Client> filterClientsByName(String name);
+    List<Client> filterClientsByName(String name);
 
     List<Client> statOldestClients();
 }

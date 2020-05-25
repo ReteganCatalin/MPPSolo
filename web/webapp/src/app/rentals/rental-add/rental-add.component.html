@@ -1,26 +1,88 @@
-<label>ClientID:
-  <input #clientID/>
-  <br/>
-</label>
-<label>MovieID:
-  <input #movieID/>
-  <br/>
-</label>
-
-<label>Day:
-  <input #day/>
-  <br/>
-</label>
-
-<label>Month:
-  <input #month/>
-  <br/>
-</label>
-
-<label>Year:
-  <input #year/>
-  <br/>
-</label>
+<form #formDir="ngForm" [formGroup]="rentalForm">
+  <div [hidden]="formDir.submitted">
+    <div class="form-group">
+      <label for="clientID">Client ID &nbsp;</label>
+      <input class="form-control" formControlName="clientID" id="clientID" required>
+      <div *ngIf="clientID.invalid && (clientID.dirty || clientID.touched)" class="alert alert-danger">
+        <div *ngIf="clientID.errors.required">
+          Client ID is required.
+        </div>
+        <div *ngIf="clientID.errors.min">
+          Client ID must be greater or equal than 0.
+        </div>
+        <div *ngIf="clientID.errors.pattern">
+          Client ID must consist only of digits.
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="form-group">
+      <label for="movieID">Movie ID &nbsp;</label>
+      <input class="form-control" formControlName="movieID" id="movieID" required>
+      <div *ngIf="movieID.invalid && (movieID.dirty || movieID.touched)" class="alert alert-danger">
+        <div *ngIf="movieID.errors.required">
+         Movie ID is required.
+        </div>
+        <div *ngIf="movieID.errors.min">
+          Movie ID must be greater or equal than 0.
+        </div>
+        <div *ngIf="movieID.errors.pattern">
+          Movie ID must consist only of digits.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="day">Day &nbsp;</label>
+      <input class="form-control" formControlName="day" id="day" required>
+      <div *ngIf="day.invalid && (day.dirty || day.touched)" class="alert alert-danger">
+        <div *ngIf="day.errors.required">
+          Day is required.
+        </div>
+        <div *ngIf="day.errors.min">
+          Day must be greater or equal than 1.
+        </div>
+        <div *ngIf="day.errors.max">
+          Day must be less or equal than 31.
+        </div>
+        <div *ngIf="day.errors.pattern">
+          Day must consist only of digits.
+        </div>
+      </div>
+    </div>
+      <div class="form-group">
+      <label for="month">Month &nbsp;</label>
+      <input class="form-control" formControlName="month" id="month" required>
+      <div *ngIf="month.invalid && (month.dirty || month.touched)" class="alert alert-danger">
+        <div *ngIf="month.errors.required">
+          Month is required.
+        </div>
+        <div *ngIf="month.errors.min">
+          Month must be greater or equal than 1.
+        </div>
+        <div *ngIf="month.errors.max">
+          Month must be less or equal than 12.
+        </div>
+        <div *ngIf="month.errors.pattern">
+          Month must consist only of digits.
+        </div>
+      </div>
+    </div>
+      <div class="form-group">
+        <label for="year">Year &nbsp;</label>
+        <input class="form-control" formControlName="year" id="year" required>
+        <div *ngIf="year.invalid && (year.dirty || year.touched)" class="alert alert-danger">
+          <div *ngIf="year.errors.required">
+            Year is required.
+          </div>
+          <div *ngIf="year.errors.min">
+            Year  must be greater or equal than 2000.
+          </div>
+          <div *ngIf="year.errors.pattern">
+            Year  must consist  of only digits.
+          </div>
+        </div>
+      </div>
+</form>
 
 <button (click)="saveRental(clientID.value,movieID.value, day.value, month.value,year.value)">
   Save

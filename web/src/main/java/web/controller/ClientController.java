@@ -1,7 +1,5 @@
 package web.controller;
 
-import core.model.domain.Client;
-import core.service.ClientService;
 import core.service.ClientServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,15 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.converter.ClientConverter;
-
 import web.dto.ClientDto;
-import web.dto.ClientsDto;
 import web.dto.SortDto;
-import web.dto.StudentDto;
+import web.dto.SortObjectDTO;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class ClientController {
@@ -63,25 +58,26 @@ public class ClientController {
     @RequestMapping(value ="/sortClients",method=RequestMethod.POST )
     List<ClientDto> getSortedClients(@RequestBody SortDto sorted)
     {
-        log.trace("Method getSortedClients entered");
-        List<String> directions=sorted.getDirections();
-        List<String> columns=sorted.getColumns();
+        log.trace("Method getSortedClients entered {} ", sorted);
+        List<SortObjectDTO> sorts=sorted.getSort();
+        log.trace("Method getSortedClients entered {} ", sorts.size());
         Sort sort=null;
-        if(directions.get(0).equals("Asc")) {
-            sort = new Sort(columns.get(0)).ascending();
+        if(sorts.get(0).getDirection().equals("Asc")) {
+            sort = new Sort(sorts.get(0).getColumn()).ascending();
         }
         else
         {
-            sort = new Sort(columns.get(0)).descending();
+            sort = new Sort(sorts.get(0).getColumn()).descending();
         }
-        for(int index=1;index<directions.size();index++)
+        for(int index=1;index<sorts.size();index++)
         {
-            if(directions.get(index).equals("Asc")) {
-                sort.and(new Sort(columns.get(index)).ascending());
+            log.trace("Method getClientsSorted sort {} created", sort);
+            if(sorts.get(index).getDirection().equals("Asc")) {
+                sort=sort.and(new Sort(sorts.get(index).getColumn()).ascending());
             }
             else
             {
-                sort.and(new Sort(columns.get(index)).descending());
+                sort=sort.and(new Sort(sorts.get(index).getColumn()).descending());
             }
         }
         log.trace("Method getClientsSorted sort {} created", sort);
@@ -94,6 +90,15 @@ public class ClientController {
         log.trace("Method getFilteredClients entered with Path Variable: name {}"+name);
         return clientConverter
                 .convertModelsToDtos(clientService.filterClientsByName(name));
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/clients/get-page/pageno={pageNo},size={size}",method=RequestMethod.GET)
+    List<ClientDto> getPaginatedClients(@PathVariable Integer pageNo,@PathVariable Integer size)
+    {
+        log.trace("Method getPaginatedClients entered with Path Variable: pageNo {} and size {}",pageNo,size);
+        return clientConverter
+                .convertModelsToDtos(clientService.paginatedClients(pageNo,size));
     }
 
     @RequestMapping(value= "/statClients",method=RequestMethod.GET)

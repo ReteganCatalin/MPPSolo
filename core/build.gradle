@@ -14,4 +14,14 @@ dependencies {
     compile group: 'com.zaxxer', name: 'HikariCP', version: "$hikariVersion"
 
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: "$jaxbapiVersion"
+    compile group: 'org.springframework', name: 'spring-context-support', version: '4.0.1.RELEASE'
+    compile group: 'com.google.guava', name: 'guava', version: "$guavaVersion"
+
+    // hibernate validation
+    compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.4.Final'
+    compile group: 'org.hibernate.validator', name: 'hibernate-validator-annotation-processor', version: '6.1.4.Final'
+    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+    compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
+    compile group: 'org.glassfish.web', name: 'javax.el', version: '2.2.6'
 }

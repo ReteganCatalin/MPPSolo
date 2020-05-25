@@ -5,6 +5,8 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Rental} from "./rental.model";
 import {map} from "rxjs/operators";
+import {Movie} from "../../movies/shared/movie.model";
+import {Sort} from "../../clients/shared/sort";
 
 
 @Injectable()
@@ -33,13 +35,25 @@ export class RentalService {
       .post<Rental>(this.rentalsUrl, rental);
   }
 
-  filterRentals(title:string): Observable<Rental[]>
+  filterRentals(year:string): Observable<Rental[]>
   {
-    let urlFilter='http://localhost:8082/api/filterRentals/'
-    const url = urlFilter.concat(title);
-    console.log(url);
+    let urlFilter=`http://localhost:8082/api/filterRentals/${year}`
     return this.httpClient
-      .get<Array<Rental>>(url);
+      .get<Array<Rental>>(urlFilter);
+  }
+  getPaginatedRentals(pageNo:string,size:string): Observable<Rental[]>
+  {
+    let urlPage=`http://localhost:8082/api/rentals/get-page/pageno=${pageNo},size=${size}`;
+
+    return this.httpClient
+      .get<Array<Rental>>(urlPage);
+  }
+
+  sortRentals(sort:Sort): Observable<Rental[]>
+  {
+    let urlSort='http://localhost:8082/api/sortRentals'
+    return this.httpClient
+      .post<Array<Rental>>(urlSort,sort);
   }
 
   update(rental): Observable<Rental> {

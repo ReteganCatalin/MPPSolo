@@ -5,6 +5,8 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Movie} from "./movie.model";
 import {map} from "rxjs/operators";
+import {Sort} from "../../clients/shared/sort";
+
 
 
 @Injectable()
@@ -35,11 +37,23 @@ export class MovieService {
 
   filterMovies(title:string): Observable<Movie[]>
   {
-    let urlFilter='http://localhost:8082/api/filterMovies/'
-    const url = urlFilter.concat(title);
-    console.log(url);
+    let urlFilter=`http://localhost:8082/api/filterMovies/${title}`
     return this.httpClient
-      .get<Array<Movie>>(url);
+      .get<Array<Movie>>(urlFilter);
+  }
+
+  getPaginatedMovies(pageNo:string,size:string): Observable<Movie[]>
+  {
+    let urlPage=`http://localhost:8082/api/movies/get-page/pageno=${pageNo},size=${size}`;
+    return this.httpClient
+      .get<Array<Movie>>(urlPage);
+  }
+
+  sortMovies(sort:Sort): Observable<Movie[]>
+  {
+    let urlSort='http://localhost:8082/api/sortMovies'
+    return this.httpClient
+      .post<Array<Movie>>(urlSort,sort);
   }
 
   update(movie): Observable<Movie> {

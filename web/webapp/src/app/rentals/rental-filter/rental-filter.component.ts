@@ -22,7 +22,10 @@ export class RentalFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterRentals("");
+    this.rentalService.getRentals().subscribe(
+      rentals=> this.rentals=rentals,
+      error => this.errorMessage = <any>error
+    );
   }
 
   filterRentals(year: string) {

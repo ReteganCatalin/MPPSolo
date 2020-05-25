@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from "./app-routing.module";
@@ -23,6 +23,12 @@ import {RentalDetailComponent} from "./rentals/rental-detail/rental-detail.compo
 import {RentalFilterComponent} from "./rentals/rental-filter/rental-filter.component";
 import {RentalListComponent} from "./rentals/rental-list/rental-list.component";
 import {ClientFilterComponent} from "./clients/client-filter/client-filter.component";
+import {ClientSortComponent} from "./clients/client-sort/client-sort.component";
+import {MovieSortComponent} from "./movies/movie-sort/movie-sort.component";
+import {ClientPaginatedComponent} from "./clients/client-paginated/client-paginated.component";
+import {MoviePaginatedComponent} from "./movies/movie-paginated/movie-paginated.component";
+import {RentalSortComponent} from "./rentals/rental-sort/rental-sort.component";
+import {RentalPaginatedComponent} from "./rentals/rental-paginated/rental-paginated.component";
 
 
 @NgModule({
@@ -33,26 +39,30 @@ import {ClientFilterComponent} from "./clients/client-filter/client-filter.compo
     ClientAddComponent,
     ClientDetailComponent,
     ClientFilterComponent,
+    ClientSortComponent,
+    ClientPaginatedComponent,
     MoviesComponent,
     MovieAddComponent,
     MovieDetailComponent,
     MovieAddComponent,
     MovieListComponent,
     MovieFilterComponent,
+    MovieSortComponent,
+    MoviePaginatedComponent,
     RentalsComponent,
     RentalAddComponent,
     RentalDetailComponent,
     RentalFilterComponent,
-    RentalListComponent
-
-
-
+    RentalListComponent,
+    RentalSortComponent,
+    RentalPaginatedComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    ReactiveFormsModule,
   ],
   providers: [ClientService,MovieService,RentalService],
   bootstrap: [AppComponent]

@@ -13,7 +13,6 @@ import java.util.List;
 @ToString
 @Builder
 public class SortDto implements Serializable {
-    private List<String> Directions;
-    private List<String> Columns;
+    private List<SortObjectDTO> sort;
 
 }

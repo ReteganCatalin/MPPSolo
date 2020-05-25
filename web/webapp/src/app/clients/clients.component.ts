@@ -13,14 +13,21 @@ export class ClientsComponent  {
   }
 
   addNewClient() {
-    console.log("add new client button clicked ");
-
     this.router.navigate(["client/add"]);
   }
 
   filterClients()
   {
     this.router.navigate(["client/filter"])
+  }
+
+  sortClients()
+  {
+    this.router.navigate(["client/sort"])
+  }
+  paginatedClients()
+  {
+    this.router.navigate(["client/paginated"])
   }
 
 }

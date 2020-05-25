@@ -1,0 +1,56 @@
+<form>
+  <mat-form-field>
+    <mat-label>Select column you want to sort by</mat-label>
+    <select [(ngModel)]="selectedColumn" name="column">
+      <option>id</option>
+      <option>clientID</option>
+      <option>movieID</option>
+      <option>day</option>
+      <option>month</option>
+      <option>year</option>
+    </select>
+  </mat-form-field>
+  <p> Selected column: {{selectedColumn}} </p>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <select matNativeControl [(ngModel)]="selectedDirection" name="direction">
+      <option>Asc</option>
+      <option>Desc</option>
+    </select>
+  </mat-form-field>
+  <p> Selected Direction: {{selectedDirection}} </p>
+</form>
+
+
+<div *ngIf="selectedRental">
+  <h2>
+    {{selectedRental.id}} was selected
+  </h2>
+  <button (click)="gotoDetail()">View Details</button>
+</div>
+
+<button id="sortBack" (click)="goBack()">Back</button>
+<button id="sortDelete" (click)="sortDelete()">Delete</button>
+<button id="sortBuild" (click)="sortBuild()">Build</button>
+<button id="sort" (click)="sortRentals()">
+  sort Rentals
+</button>
+<div>
+<h2>Rentals</h2>
+  <ol class="rentals">
+  <li *ngFor="let rental of rentals "
+      [class.selected]="rental === selectedRental"
+      (click)="onSelect(rental)">
+    {{rental.id}}
+
+    <button
+      [class.delete]="true"
+      (click)="deleteRental(rental);$event.stopPropagation()">delete
+    </button>
+  </li>
+  </ol>
+</div>
+
+
+
+

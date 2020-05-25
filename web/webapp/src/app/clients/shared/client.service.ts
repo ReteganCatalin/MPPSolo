@@ -4,8 +4,10 @@ import {HttpClient} from "@angular/common/http";
 
 import {Observable} from "rxjs";
 import {Client} from "./client.model";
+import {Sort} from "./sort";
 import {map} from "rxjs/operators";
-import {Movie} from "../../movies/shared/movie.model";
+
+
 
 
 @Injectable()
@@ -22,12 +24,26 @@ export class ClientService {
 
   filterClients(name:string): Observable<Client[]>
   {
-    let urlFilter='http://localhost:8082/api/filterClients/'
-    const url = urlFilter.concat(name);
-    console.log(url);
+    let urlFilter=`http://localhost:8082/api/filterClients/${name}`
     return this.httpClient
-      .get<Array<Client>>(url);
+      .get<Array<Client>>(urlFilter);
   }
+
+  sortClients(sort:Sort): Observable<Client[]>
+  {
+    let urlSort='http://localhost:8082/api/sortClients/'
+    return this.httpClient
+      .post<Array<Client>>(urlSort,sort);
+  }
+
+  getPaginatedClients(pageNo:string,size:string): Observable<Client[]>
+  {
+    let urlPage=`http://localhost:8082/api/clients/get-page/pageno=${pageNo},size=${size}`;
+    console.log(urlPage);
+    return this.httpClient
+      .get<Array<Client>>(urlPage);
+  }
+
 
   getClient(id: number): Observable<Client> {
     return this.getClients()
