@@ -66,34 +66,38 @@ export class MoviePaginatedComponent implements OnInit {
     this.movies=this.movies.sort((a,b)=> {
         let sortCond=sorter.map(cond => {
             let value = 0;
+          switch(cond.column) {
+            case'title': {
+              value=a.title.localeCompare(b.title)
+              break;
+            }
+            case ('director') : {
+              value=a.director.localeCompare(b.director)
+              break;
 
-          if(cond.column=='title')
-          {
-            value=a.title.localeCompare(b.title)
+            }
+            case('genre') : {
+              value=a.genre.localeCompare(b.genre)
+              break;
+            }
+            case('mainStar') : {
+              value=a.mainStar.localeCompare(b.mainStar)
+              break;
+            }
+            case('yearOfRelease') : {
+              value=a.yearOfRelease-b.yearOfRelease;
+              break;
+            }
+            case('id') : {
+              value = a.id - b.id;
+              break;
+            }
           }
-          else if(cond.column=='genre')
-          {
-            value=a.genre.localeCompare(b.genre)
+          if (cond.direction == "Desc") {
+            value *= -1;
           }
-          else if(cond.column=='director')
-          {
-            value=a.director.localeCompare(b.director)
-          }
-          else if(cond.column=='mainStar')
-          {
-            value=a.mainStar.localeCompare(b.mainStar)
-          }
-          else if(cond.column=='yearOfRelease')
-          {
-            value=a.yearOfRelease-b.yearOfRelease;
-          }
-          else if(cond.column=='id')
-          {
-            value=a.id-b.id;
-          }
-
-            return value;
-          }
+          return value;
+        }
         ).filter(val=>val!=0);
         if(sortCond.length==0)
         {

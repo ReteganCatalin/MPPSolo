@@ -1,8 +1,13 @@
 package core.repository.CriteriaAPI;
 
-import core.model.domain.*;
+import core.model.domain.Movie;
+import core.model.domain.Movie_;
+import core.model.domain.Rental;
+import core.model.domain.Rental_;
 import core.repository.CustomRepositorySupport;
 import core.repository.MovieCustomRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +19,11 @@ import java.util.List;
 @Component("MovieCriteriaAPIRepoImpl")
 public class MovieCriteriaAPIRepositoryImpl extends CustomRepositorySupport
         implements MovieCustomRepository {
+    public static final Logger log = LoggerFactory.getLogger(MovieCriteriaAPIRepositoryImpl.class);
 
     @Override
     public List<Movie> findByDirectorWithRentalAndClient(@Param("director") String director) {
+        log.trace("findByDirectorWithRentalAndClient - method entered director={}",director);
         EntityManager entityManager = getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Movie> query = criteriaBuilder.createQuery(Movie.class);
@@ -30,6 +37,7 @@ public class MovieCriteriaAPIRepositoryImpl extends CustomRepositorySupport
         querying.setParameter(directing,director);
 
         List<Movie>  movies = querying.getResultList();
+        log.trace("findByDirectorWithRentalAndClient - method finished");
 
         return movies;
 
@@ -38,6 +46,7 @@ public class MovieCriteriaAPIRepositoryImpl extends CustomRepositorySupport
     @Override
     public  List<Movie> findByMainStar(@Param("mainstar") String mainstar)
     {
+        log.trace("findByMainStar - method entered mainStar={}",mainstar);
         CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 
         CriteriaQuery<Movie> criteriaQuery = criteriaBuilder.createQuery(Movie.class);
@@ -48,6 +57,7 @@ public class MovieCriteriaAPIRepositoryImpl extends CustomRepositorySupport
         TypedQuery<Movie> query = getEntityManager().createQuery(criteriaQuery);
         query.setParameter(pe, mainstar);
         List<Movie> result = query.getResultList();
+        log.trace("findByMainStar - method finished");
         return result;
     }
 

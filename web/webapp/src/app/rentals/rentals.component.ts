@@ -18,18 +18,18 @@ export class RentalsComponent  {
     this.router.navigate(["rental/add"]);
   }
 
-  filterRentals()
-  {
-    this.router.navigate(["rental/filter"])
-  }
-
-  sortRentals()
-  {
-    this.router.navigate(["rental/sort"])
-  }
-  paginatedRentals()
-  {
-    this.router.navigate(["rental/paginated"])
-  }
+  // filterRentals()
+  // {
+  //   this.router.navigate(["rental/filter"])
+  // }
+  //
+  // sortRentals()
+  // {
+  //   this.router.navigate(["rental/sort"])
+  // }
+  // paginatedRentals()
+  // {
+  //   this.router.navigate(["rental/paginated"])
+  // }
 
 }

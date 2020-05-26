@@ -35,6 +35,7 @@
         <Logger name="org.springframework.http.converter.json" level="WARN"/>
         <Logger name="com.fasterxml.jackson.databind" level="WARN"/>
         <Logger name="core.service" level="TRACE"/>
+        <Logger name="core.repository" level="TRACE"/>
         <Logger name="web.controller" level="TRACE"/>
 
         <!-- ROOT -->

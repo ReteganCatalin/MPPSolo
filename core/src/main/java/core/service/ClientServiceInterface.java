@@ -1,6 +1,7 @@
 package core.service;
 
 import core.model.domain.Client;
+import core.model.domain.Rental;
 import core.model.exceptions.MyException;
 import core.model.exceptions.ValidatorException;
 import org.springframework.data.domain.Sort;
@@ -25,4 +26,12 @@ public interface ClientServiceInterface {
     List<Client> filterClientsByAge(Integer age);
 
     List<Client> statOldestClients();
+
+    void addRental(Long ClientID,Long MovieID,int year,int month,int day) throws ValidatorException, MyException;
+    Rental updateRental(Long ID, Long ClientID, Long MovieID, int year, int month, int day) throws ValidatorException, MyException;
+
+    void deleteRental(Long id) throws ValidatorException;
+
+
+    List<Rental> getAllRentals();
 }

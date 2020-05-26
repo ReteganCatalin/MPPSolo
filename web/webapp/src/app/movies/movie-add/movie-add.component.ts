@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MovieService} from "../shared/movie.service";
 import {Location} from "@angular/common";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-movie-new',
@@ -11,7 +12,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class MovieAddComponent implements OnInit {
   movieForm: FormGroup;
   constructor(private movieService: MovieService,
-              private location: Location
+              private location: Location,
+              private router:Router
   ) {
   }
 
@@ -61,6 +63,9 @@ export class MovieAddComponent implements OnInit {
   {
     return this.movieForm.get('mainStar')
   }
+  goBack(): void {
+    this.location.back();
+  }
 
   saveMovie(title: string, director: string, genre: string,mainStar:string,yearOfRelease:string) {
     console.log("saving movie", title, director, mainStar,genre,yearOfRelease);
@@ -73,8 +78,6 @@ export class MovieAddComponent implements OnInit {
       mainStar,
       yearOfRelease: Number(yearOfRelease)
     })
-      .subscribe(movie => console.log("saved movie: ", movie));
-
-    this.location.back(); // ...
+      .subscribe(movie => {console.log("saved movie: ", movie);this.router.navigate(["movies"]);});
   }
 }

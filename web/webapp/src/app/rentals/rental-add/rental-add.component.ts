@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RentalService} from "../shared/rental.service";
 import {Location} from "@angular/common";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-rental-new',
@@ -11,7 +12,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class RentalAddComponent implements OnInit {
   rentalForm:FormGroup
   constructor(private rentalService: RentalService,
-              private location: Location
+              private location: Location,
+              private router:Router
   ) {
   }
 
@@ -68,6 +70,10 @@ export class RentalAddComponent implements OnInit {
     return this.rentalForm.get('movieID')
   }
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   saveRental(clientID: string, movieID: string, day: string,month:string,year:string) {
     console.log("saving rental", clientID, movieID, day,month,year);
 
@@ -79,8 +85,8 @@ export class RentalAddComponent implements OnInit {
       month: Number(month),
       year: Number(year)
     })
-      .subscribe(rental => console.log("saved rental: ", rental));
-
-    this.location.back(); // ...
+      .subscribe(rental => {console.log("saved rental: ", rental);this.router.navigate(["rentals"]);});
+    //await delay(3000);
+     // ...
   }
 }

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ClientService} from "../shared/client.service";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {Location} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-client-new',
@@ -11,7 +12,10 @@ import {Location} from "@angular/common";
 export class ClientAddComponent implements OnInit {
   clientForm: FormGroup;
   constructor(private clientService: ClientService,
-              private location: Location
+              private location: Location,
+              private router:Router
+
+
   ) {
   }
 
@@ -52,8 +56,7 @@ export class ClientAddComponent implements OnInit {
       lastName,
       age: Number(age)
     })
-      .subscribe(client => console.log("saved client: ", client));
-
-    this.location.back(); // ...
+      .subscribe(client =>{ console.log("saved client: ", client);this.router.navigate(["clients"]);});
+     // ...
   }
 }

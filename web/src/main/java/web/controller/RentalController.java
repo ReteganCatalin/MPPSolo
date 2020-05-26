@@ -1,7 +1,7 @@
 package web.controller;
 
 import core.model.domain.Rental;
-import core.service.RentalServiceInterface;
+import core.service.ClientServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class RentalController {
     public static final Logger log= LoggerFactory.getLogger(RentalController.class);
 
     @Autowired
-    private RentalServiceInterface rentalService;
+    private ClientServiceInterface clientService;
 
     @Autowired
     private RentalConverter rentalConverter;
@@ -29,7 +29,7 @@ public class RentalController {
     List<RentalDto> getRentals() {
         log.trace("Method getRentals entered");
         return rentalConverter
-                .convertModelsToDtos(rentalService.getAllRentals().stream().collect(Collectors.toList()));
+                .convertModelsToDtos(clientService.getAllRentals().stream().collect(Collectors.toList()));
 
     }
     @CrossOrigin
@@ -38,13 +38,13 @@ public class RentalController {
         log.trace("Method saveRental entered with rental ={}",RentalDto);
         Rental rental=rentalConverter.convertDtoToModel(RentalDto) ;
         log.trace(rental.toString());
-        rentalService.addRental(RentalDto.getClientID(),RentalDto.getMovieID(),RentalDto.getYear(),RentalDto.getMonth(),RentalDto.getDay());
+        clientService.addRental(RentalDto.getClientID(),RentalDto.getMovieID(),RentalDto.getYear(),RentalDto.getMonth(),RentalDto.getDay());
     }
     @CrossOrigin
     @RequestMapping(value = "/rentals", method = RequestMethod.PUT)
     void updateRental(@RequestBody RentalDto RentalDto) {
         log.trace("Method updateRental entered with rental {}",RentalDto);
-        rentalService.updateRental(RentalDto.getId(),
+        clientService.updateRental(RentalDto.getId(),
                 RentalDto.getClientID(),RentalDto.getMovieID(),RentalDto.getYear(),RentalDto.getMonth(),RentalDto.getDay());
         return;
     }
@@ -53,7 +53,7 @@ public class RentalController {
     ResponseEntity<?> deleteRental(@PathVariable Long id){
         log.trace("Method deleteRental entered with id {}",id);
 
-        rentalService.deleteRental(id);
+        clientService.deleteRental(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

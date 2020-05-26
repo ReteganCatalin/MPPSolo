@@ -65,30 +65,36 @@ export class RentalPaginatedComponent implements OnInit {
     this.rentals=this.rentals.sort((a,b)=> {
         let sortCond=sorter.map(cond => {
             let value = 0;
-          if(cond.column=='clientID')
-          {
-            value=a.clientID-b.clientID;
-          }
-          else if(cond.column=='movieID')
-          {
-              value = a.movieID-b.movieID;
-          }
-          else if(cond.column=='day')
-          {
-            value=a.day-b.day;
-          }
-          else if(cond.column=='month')
-          {
-            value=a.month-b.month;
-          }
-          else if(cond.column=='year')
-          {
-            value=a.year-b.year
-          }
-          else if(cond.column=='id')
-          {
-            value=a.id-b.id;
-          }
+            switch (cond.column) {
+              case'clientID': {
+                value = a.clientID - b.clientID;
+                break;
+              }
+              case ('movieID') : {
+                value = a.movieID - b.movieID;
+                break;
+
+              }
+              case('day') : {
+                value = a.day - b.day;
+                break;
+              }
+              case('month') : {
+                value = a.month - b.month;
+                break;
+              }
+              case('yearOfRelease') : {
+                value = a.year - b.year
+                break;
+              }
+              case('id') : {
+                value = a.id - b.id;
+                break;
+              }
+            }
+            if (cond.direction == "Desc") {
+              value *= -1;
+            }
             return value;
           }
         ).filter(val=>val!=0);

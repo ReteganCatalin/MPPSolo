@@ -1,10 +1,13 @@
 package core.service;
 
 import core.model.domain.Client;
+import core.model.domain.Movie;
+import core.model.domain.Rental;
 import core.model.exceptions.MyException;
 import core.model.exceptions.ValidatorException;
 import core.model.validators.Validator;
 import core.repository.ClientRepository;
+import core.repository.MovieRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -26,7 +31,25 @@ public class ClientService implements ClientServiceInterface {
     @Autowired
     private ClientRepository repository;
     @Autowired
+    private MovieRepository movieRepository;
+    @Autowired
     private Validator<Client> validator;
+
+    @Autowired
+    private Validator<Rental> validatorRental;
+
+
+    @Autowired
+    private EntityManager entityManager;
+
+    private void checkIDs(Long ClientID, Long MovieID)
+    {
+        log.trace("checkIDs - method entered: clientID={} , movieID={}", ClientID,MovieID);
+        repository.findAllWithRentals().stream().filter(entry->entry.getId().equals(ClientID)).findFirst().orElseThrow(()->new MyException("Client ID not found! "));
+        movieRepository.findAllWithRentals().stream().filter(entry->entry.getId().equals(MovieID)).findFirst().orElseThrow(()->new MyException("Movie ID not found! "));
+    }
+
+
 
 
     @Override
@@ -154,6 +177,97 @@ public class ClientService implements ClientServiceInterface {
         //log.trace("filterClientsByAge - method finished filtered={}, rentals={}, movie={}",clients,clients.get(0).getRentals(),clients.get(0).getRentals().get(0).getMovie());
         log.trace("filterClientsByAge - method finished filtered={}",clients);
         return clients;
+    }
+
+    @Transactional
+    public void addRental(Long ClientID,Long MovieID,int year,int month,int day) throws ValidatorException, MyException
+    {
+        Rental rental= Rental.builder()
+                .day(day)
+                .month(month)
+                .year(year)
+                .client(entityManager.getReference(Client.class,ClientID))
+                .movie(entityManager.getReference(Movie.class,MovieID))
+                .build();
+        log.trace("addRental - method entered: rental={}", rental);
+        checkIDs(rental.getClient().getId(),rental.getMovie().getId());
+        List<Client> clients=repository.findAllWithRentals();
+        List<Rental>  rentals=clients.stream().map(entry->entry.getRentals()).reduce(new ArrayList<>(),(a,b)->{a.addAll(b);return a;});
+        Set<Rental> filteredRentals=StreamSupport.stream(rentals.spliterator(),false).collect(Collectors.toSet());
+        filteredRentals
+                .stream()
+                .filter(exists-> (exists.getClient().getId().equals(rental.getClient().getId())) && exists.getMovie().getId().equals(rental.getMovie().getId()))
+                .findFirst().ifPresent(optional->{throw new MyException("Rental for that movie and client exists");});
+
+        validatorRental.validate(rental);
+        if(rentals.contains(rental)==true) {
+            throw new MyException("Rental already exists");
+        }
+        repository.findAllWithRentals()
+                .stream()
+                .filter(entry->entry.equals(rental.getClient()))
+                .findFirst()
+                .get()
+                .getRentals()
+                .add(rental);
+
+        log.debug("addRental - added: added={}", rental);
+        log.trace("addRental - method finished");
+    }
+
+    @Transactional
+    public Rental updateRental(Long ID,Long ClientID,Long MovieID,int year,int month,int day) throws ValidatorException, MyException
+    {
+        //Maybe have to do for movies too ?
+        Rental rental= Rental.builder()
+                .day(day)
+                .month(month)
+                .year(year)
+                .client(entityManager.getReference(Client.class,ClientID))
+                .movie(entityManager.getReference(Movie.class,MovieID))
+                .build();
+        rental.setId(ID);
+        log.trace("updateRental - method entered: rental={}", rental);
+        Optional<Client> found_client=repository.findById(rental.getClient().getId());
+        Optional<Rental> found_rental= found_client.get().getRentals().stream().filter(entry->entry.getId().equals(rental.getId())).findFirst();
+        found_rental.orElseThrow(()-> new MyException("No Rental to update"));
+        validatorRental.validate(rental);
+        repository
+                .findAllWithRentals().stream().filter(entry->entry.getId().equals(ClientID))
+                .findFirst()
+                .get()
+                .getRentals()
+                .stream().filter(entry->entry.getId().equals(ID))
+                .findFirst()
+                .ifPresent(r -> {
+                    r.setDay(rental.getDay());
+                    r.setMonth(rental.getMonth());
+                    r.setYear(rental.getYear());
+                    log.debug("updateRental - updated: c={}", r);
+                });
+        log.trace("updateRental - method finished");
+        return found_rental.get();
+    }
+
+    public void deleteRental(Long id) throws ValidatorException
+    {
+        log.trace("deleteRental - method entered: id={}", id);
+        entityManager.getTransaction().begin();
+        Rental rent= entityManager.find(Rental.class, id);
+        entityManager.remove(rent);
+        entityManager.getTransaction().commit();
+        log.trace("deleteRental - method finished");
+        return;
+    }
+
+    public List<Rental> getAllRentals()
+    {
+        log.trace("getAllRentals - method entered");
+        List<Client> clients=repository.findAllWithRentals();
+        List<Rental>  rentals=clients.stream().map(entry->entry.getRentals()).reduce(new ArrayList<>(),(a, b)->{a.addAll(b);return a;});
+        log.trace("getAllRentals - method finished");
+        return rentals;
+
     }
 
     @Override
