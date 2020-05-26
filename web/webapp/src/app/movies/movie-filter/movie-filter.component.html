@@ -3,6 +3,16 @@
   <br/>
 </label>
 
+<label>Director:
+  <input #director/>
+  <br/>
+</label>
+
+<label>mainStar:
+  <input #mainStar/>
+  <br/>
+</label>
+
 <div *ngIf="selectedMovie">
   <h2>
     {{selectedMovie.id}} was selected
@@ -11,9 +21,9 @@
 </div>
 
 <button id="filterBack" (click)="goBack()">Back</button>
-<button id="filter" (click)="filterMovies(title.value)">
-  filter Movies
-</button>
+<button id="filter" (click)="filterMovies(title.value)">filter Movies by Title</button>
+<button id="filterDirector" (click)="filterMoviesByDirector(director.value)">filter Movies by Director</button>
+<button id="filterMainStar" (click)="filterMoviesByMainStar(mainStar.value)">filter Movies by Main Star</button>
 <div>
 <h2>Movies</h2>
   <ol class="movies">

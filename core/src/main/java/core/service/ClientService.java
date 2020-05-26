@@ -146,6 +146,24 @@ public class ClientService implements ClientServiceInterface {
         log.trace("filterClientsByName - method finished filtered={}",clients);
         return clients;
     }
+    @Override
+    public List<Client> filterClientsByAge(Integer age)
+    {
+        log.trace("filterClientsByAge - method entered name={}",age);
+        List<Client> clients=repository.findByAgeWithRentalAndMovie(age);
+        //log.trace("filterClientsByAge - method finished filtered={}, rentals={}, movie={}",clients,clients.get(0).getRentals(),clients.get(0).getRentals().get(0).getMovie());
+        log.trace("filterClientsByAge - method finished filtered={}",clients);
+        return clients;
+    }
+
+    @Override
+    public List<Client> filterClientsByFirstName(String firstName)
+    {
+        log.trace("filterClientsByFirstName - method entered name={}",firstName);
+        List<Client> clients=repository.findByFirstName(firstName);
+        log.trace("filterClientsByFirstName - method finished filtered={}",clients);
+        return clients;
+    }
 
     public List<Client> paginatedClients(Integer pageNo,Integer size)
     {

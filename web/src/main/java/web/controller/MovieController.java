@@ -85,12 +85,30 @@ public class MovieController {
         return movieConverter.convertModelsToDtos(movieService.getAllMoviesSorted(sort));
     }
     @CrossOrigin
-    @RequestMapping(value = "/filterMovies/{title}", method=RequestMethod.GET)
+    @RequestMapping(value = "/filterMovies/title={title}", method=RequestMethod.GET)
     List<MovieDto> getFilteredMovies(@PathVariable String title)
     {
-        log.trace("Method getFilteredMovies entered with Path Variable: title {}"+title);
+        log.trace("Method getFilteredMovies entered with Path Variable: title {}",title);
         return movieConverter
                 .convertModelsToDtos(movieService.filterMoviesByTitle(title));
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/filterMovies/director={director}", method=RequestMethod.GET)
+    List<MovieDto> getFilteredMoviesByDirector(@PathVariable String director)
+    {
+        log.trace("Method getFilteredMoviesByDirector entered with Path Variable: director {}",director);
+        return movieConverter
+                .convertModelsToDtos(movieService.filterMoviesByDirector(director));
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/filterMovies/mainStar={mainStar}", method=RequestMethod.GET)
+    List<MovieDto> getFilteredMoviesByMainStar(@PathVariable String mainStar)
+    {
+        log.trace("Method getFilteredMoviesByMainStar entered with Path Variable: mainStar {}",mainStar);
+        return movieConverter
+                .convertModelsToDtos(movieService.filterMoviesByMainStar(mainStar));
     }
     @CrossOrigin
     @RequestMapping(value = "/movies/get-page/pageno={pageNo},size={size}",method=RequestMethod.GET)

@@ -24,7 +24,21 @@ export class ClientService {
 
   filterClients(name:string): Observable<Client[]>
   {
-    let urlFilter=`http://localhost:8082/api/filterClients/${name}`
+    let urlFilter=`http://localhost:8082/api/filterClients/name=${name}`
+    return this.httpClient
+      .get<Array<Client>>(urlFilter);
+  }
+
+  filterClientsAge(age:string): Observable<Client[]>
+  {
+    let urlFilter=`http://localhost:8082/api/filterClients/age=${age}`
+    return this.httpClient
+      .get<Array<Client>>(urlFilter);
+  }
+
+  filterClientsFirstName(name:string): Observable<Client[]>
+  {
+    let urlFilter=`http://localhost:8082/api/filterClients/firstName=${name}`
     return this.httpClient
       .get<Array<Client>>(urlFilter);
   }

@@ -37,7 +37,21 @@ export class MovieService {
 
   filterMovies(title:string): Observable<Movie[]>
   {
-    let urlFilter=`http://localhost:8082/api/filterMovies/${title}`
+    let urlFilter=`http://localhost:8082/api/filterMovies/title=${title}`
+    return this.httpClient
+      .get<Array<Movie>>(urlFilter);
+  }
+
+  filterMoviesByDirector(director:string): Observable<Movie[]>
+  {
+    let urlFilter=`http://localhost:8082/api/filterMovies/director=${director}`
+    return this.httpClient
+      .get<Array<Movie>>(urlFilter);
+  }
+
+  filterMoviesByMainStar(mainStar:string): Observable<Movie[]>
+  {
+    let urlFilter=`http://localhost:8082/api/filterMovies/mainStar=${mainStar}`
     return this.httpClient
       .get<Array<Movie>>(urlFilter);
   }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-@Component("ClientJPQLRepository")
+@Component("ClientNativeSQLRepo")
 public interface ClientRepository extends IRepository<Client, Long> , ClientCustomRepository{
 
     @Query("select client from Client client")

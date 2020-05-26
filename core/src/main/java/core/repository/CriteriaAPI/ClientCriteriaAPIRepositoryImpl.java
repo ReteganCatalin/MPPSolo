@@ -1,7 +1,9 @@
 package core.repository.CriteriaAPI;
 
 import core.model.domain.Client;
+import core.model.domain.Client_;
 import core.model.domain.Rental;
+import core.model.domain.Rental_;
 import core.repository.ClientCustomRepository;
 import core.repository.CustomRepositorySupport;
 import org.springframework.data.repository.query.Param;
@@ -24,7 +26,13 @@ public class ClientCriteriaAPIRepositoryImpl extends CustomRepositorySupport
         Root<Client> root = query.from(Client.class);
         Fetch<Client, Rental> clientRentalsFetch = root.fetch(Client_.rentals, JoinType.LEFT);
         clientRentalsFetch.fetch(Rental_.movie, JoinType.LEFT);
-        List<Client>  clients = entityManager.createQuery(query).getResultList();
+        ParameterExpression<Integer> ageing = criteriaBuilder.parameter(Integer.class);
+        query.where(criteriaBuilder.equal(root.get("age"),ageing));
+
+        TypedQuery<Client> querying = getEntityManager().createQuery(query);
+        querying.setParameter(ageing,age);
+
+        List<Client>  clients = querying.getResultList();
 
         return clients;
 
@@ -38,7 +46,7 @@ public class ClientCriteriaAPIRepositoryImpl extends CustomRepositorySupport
         CriteriaQuery<Client> criteriaQuery = criteriaBuilder.createQuery(Client.class);
         Root<Client> Root = criteriaQuery.from(Client.class);
         ParameterExpression<String> pe = criteriaBuilder.parameter(String.class);
-        criteriaQuery.where(criteriaBuilder.equal(Root.get("name"),pe));
+        criteriaQuery.where(criteriaBuilder.equal(Root.get("firstName"),pe));
 
         TypedQuery<Client> query = getEntityManager().createQuery(criteriaQuery);
         query.setParameter(pe, name);

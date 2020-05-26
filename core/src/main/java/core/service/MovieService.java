@@ -135,13 +135,32 @@ public class MovieService implements MovieServiceInterface {
      * @param title a movie title of type {@code String}
      * @return {@code HashSet} containing all the Movie Instances from the repository that contain the title parameter in the title
      */
+    @Override
     public List<Movie> filterMoviesByTitle(String title)
     {
         log.trace("filterMoviesByTitle - method entered title={}",title);
-        List<Movie> movies=repository.findMovieByName("title");
-        log.trace("filterMoviesByTitle - method finished");
+        List<Movie> movies=repository.findAllMovieByTitle(title);
+        log.trace("filterMoviesByTitle - method finished movies={}",movies);
         return movies;
     }
+    @Override
+    public List<Movie> filterMoviesByDirector(String director)
+    {
+        log.trace("filterMoviesByDirector - method entered director={}",director);
+        List<Movie> movies=repository.findByDirectorWithRentalAndClient(director);
+        log.trace("filterMoviesByDirector - method finished movies={}",movies);
+        return movies;
+    }
+
+    public List<Movie> filterMoviesByMainStar(String mainStar)
+    {
+        log.trace("filterMoviesByMainStar - method entered mainStar={}",mainStar);
+        List<Movie> movies=repository.findByMainStar(mainStar);
+        log.trace("filterMoviesByMainStar - method finished movies={}",movies);
+        return movies;
+    }
+
+
     public List<Movie> paginatedMovies(Integer pageNo,Integer size)
     {
         log.trace("paginatedMovies - method entered with pageNo={} and size={}",pageNo,size);

@@ -21,6 +21,8 @@ public interface ClientServiceInterface {
     List<Client> paginatedClients(Integer pageNo,Integer size);
 
     List<Client> filterClientsByName(String name);
+    List<Client> filterClientsByFirstName(String name);
+    List<Client> filterClientsByAge(Integer age);
 
     List<Client> statOldestClients();
 }

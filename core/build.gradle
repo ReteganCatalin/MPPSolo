@@ -24,4 +24,5 @@ dependencies {
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
     compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
     compile group: 'org.glassfish.web', name: 'javax.el', version: '2.2.6'
+    annotationProcessor("org.hibernate:hibernate-jpamodelgen:${hibernateVersion}")
 }

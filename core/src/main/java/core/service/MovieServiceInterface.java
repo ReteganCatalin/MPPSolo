@@ -19,6 +19,8 @@ public interface MovieServiceInterface {
 
     List<Movie> getAllMoviesSorted(Sort sort);
     List<Movie> filterMoviesByTitle(String title);
+    List<Movie> filterMoviesByDirector(String director);
+    List<Movie> filterMoviesByMainStar(String mainStar);
     List<Movie> paginatedMovies(Integer pageNo,Integer size);
 
     Map<Integer, List<Movie>> statMostRichYearsInMovies();

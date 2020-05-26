@@ -3,6 +3,14 @@
   <br/>
 </label>
 
+<label>Age:
+  <input #age/>
+  <br/>
+</label>
+<label>FirstName:
+  <input #firstName/>
+  <br/>
+</label>
 <div *ngIf="selectedClient">
   <h2>
     {{selectedClient.id}} was selected
@@ -11,9 +19,9 @@
 </div>
 
 <button id="filterBack" (click)="goBack()">Back</button>
-<button id="filter" (click)="filterClients(name.value)">
-  filter Clients
-</button>
+<button id="filter" (click)="filterClients(name.value)">filter Clients by First and Last Name</button>
+<button id="filterAge" (click)="filterClientsAge(age.value)">filter Clients by Age</button>
+<button id="filterFirstName" (click)="filterClientsFirstName(firstName.value)">filter Clients By oNly First Name</button>
 <div>
 <h2>Clients</h2>
   <ol class="clients">

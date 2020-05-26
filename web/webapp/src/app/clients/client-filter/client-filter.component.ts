@@ -37,6 +37,25 @@ export class ClientFilterComponent implements OnInit {
     );
 
   }
+
+  filterClientsAge(age: string) {
+    console.log("filter clients", age);
+
+    this.clientService.filterClientsAge(age).subscribe(
+      clients => this.clients = clients,
+      error => this.errorMessage = <any>error
+    );
+
+  }
+  filterClientsFirstName(name: string) {
+    console.log("filter clients", name);
+
+    this.clientService.filterClientsFirstName(name).subscribe(
+      clients => this.clients = clients,
+      error => this.errorMessage = <any>error
+    );
+
+  }
   onSelect(client: Client): void {
     this.selectedClient = client;
   }

@@ -4,11 +4,13 @@ import core.model.domain.Movie;
 import core.repository.CustomRepositorySupport;
 import core.repository.MovieCustomRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
+@Component("MovieJPQLRepoImpl")
 public class MovieJPQLRepositoryImpl extends CustomRepositorySupport
         implements MovieCustomRepository {
 
@@ -22,20 +24,22 @@ public class MovieJPQLRepositoryImpl extends CustomRepositorySupport
                         "where movie.director=:director"
 
         );
+        query.setParameter("director",director);
         List<Movie> movies = query.getResultList();
 
         return movies;
     }
 
     @Override
-    public List<Movie> findByMainStar(@Param("mainstar") String mainstar)
+    public List<Movie> findByMainStar(@Param("mainstar") String mainStar)
     {
         EntityManager entityManager = getEntityManager();
         Query query = entityManager.createQuery(
                 "select movie from Movie movie " +
-                        "where movie.mainStar=:mainstar"
+                        "where movie.mainStar=:mainStar"
 
         );
+        query.setParameter("mainStar",mainStar);
         List<Movie> movies = query.getResultList();
 
         return movies;

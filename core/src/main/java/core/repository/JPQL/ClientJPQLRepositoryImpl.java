@@ -18,12 +18,13 @@ public class ClientJPQLRepositoryImpl extends CustomRepositorySupport
     public List<Client> findByAgeWithRentalAndMovie(@Param("age") int age) {
         EntityManager entityManager = getEntityManager();
         Query query = entityManager.createQuery(
-                "select client,movie.director from Client client " +
+                "select client from Client client " +
                         "left join fetch client.rentals rents " +
                         "left join fetch rents.movie movie " +
                         "where client.age=:age"
 
         );
+        query.setParameter("age",age);
         List<Client> clients = query.getResultList();
 
         return clients;
@@ -35,9 +36,10 @@ public class ClientJPQLRepositoryImpl extends CustomRepositorySupport
         EntityManager entityManager = getEntityManager();
         Query query = entityManager.createQuery(
                 "select client from Client client " +
-                        "where client.firstName=:age"
+                        "where client.firstName=:name"
 
         );
+        query.setParameter("name",name);
         List<Client> clients = query.getResultList();
 
         return clients;

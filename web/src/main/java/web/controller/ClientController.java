@@ -84,12 +84,30 @@ public class ClientController {
         return clientConverter.convertModelsToDtos(clientService.getAllClientsSorted(sort));
     }
     @CrossOrigin
-    @RequestMapping(value = "/filterClients/{name}", method=RequestMethod.GET)
+    @RequestMapping(value = "/filterClients/name={name}", method=RequestMethod.GET)
     List<ClientDto> getFilteredClients(@PathVariable String name)
     {
         log.trace("Method getFilteredClients entered with Path Variable: name {}"+name);
         return clientConverter
                 .convertModelsToDtos(clientService.filterClientsByName(name));
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/filterClients/age={age}", method=RequestMethod.GET)
+    List<ClientDto> getFilteredClientsAge(@PathVariable Integer age)
+    {
+        log.trace("Method getFilteredClientsAge entered with Path Variable: age {}"+age);
+        return clientConverter
+                .convertModelsToDtos(clientService.filterClientsByAge(age));
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/filterClients/firstName={name}", method=RequestMethod.GET)
+    List<ClientDto> getFilteredClientsFirstName(@PathVariable String name)
+    {
+        log.trace("Method getFilteredClientsFirstName entered with Path Variable: name {}" + name);
+        return clientConverter
+                .convertModelsToDtos(clientService.filterClientsByFirstName(name));
     }
 
     @CrossOrigin

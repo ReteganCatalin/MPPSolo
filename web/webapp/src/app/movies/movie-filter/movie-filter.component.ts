@@ -37,6 +37,26 @@ export class MovieFilterComponent implements OnInit {
     );
 
   }
+
+  filterMoviesByDirector(director: string) {
+    console.log("filter movies", director);
+
+    this.movieService.filterMoviesByDirector(director).subscribe(
+      movies => this.movies = movies,
+      error => this.errorMessage = <any>error
+    );
+
+  }
+
+  filterMoviesByMainStar(mainStar: string) {
+    console.log("filter movies", mainStar);
+
+    this.movieService.filterMoviesByMainStar(mainStar).subscribe(
+      movies => this.movies = movies,
+      error => this.errorMessage = <any>error
+    );
+
+  }
   onSelect(movie: Movie): void {
     this.selectedMovie = movie;
   }
