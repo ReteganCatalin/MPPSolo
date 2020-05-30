@@ -17,6 +17,10 @@ export class RentalsComponent  {
 
     this.router.navigate(["rental/add"]);
   }
+  goBack()
+  {
+    this.router.navigate(["home"])
+  }
 
   // filterRentals()
   // {

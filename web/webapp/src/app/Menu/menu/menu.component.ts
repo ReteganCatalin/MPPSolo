@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from "../../login/LoginService/LoginService";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-menu',
@@ -8,16 +9,21 @@ import {LoginService} from "../../login/LoginService/LoginService";
 })
 export class MenuComponent implements OnInit {
   title = 'Rental Shop';
-  constructor(private loginService: LoginService) { }
+  shopkeeper_role=false;
+  constructor(private loginService: LoginService,private router:Router ) { }
 
   ngOnInit(): void {
-
+    this.loginService.getCurrentRole().subscribe(result => {
+      console.log(result);
+      this.shopkeeper_role = result === 'ROLE_SHOPKEEPER';
+    })
   }
 
   logout()
   {
     console.log("here dsds")
     this.loginService.logout();
+    this.router.navigate(["login"]);
   }
 
 

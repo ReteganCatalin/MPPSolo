@@ -30,6 +30,10 @@ export class MoviesComponent  {
   {
     this.router.navigate(["movie/paginated"])
   }
+  goBack()
+  {
+    this.router.navigate(["home"])
+  }
 
 
 }

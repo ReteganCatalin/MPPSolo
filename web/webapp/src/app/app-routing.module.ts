@@ -21,31 +21,33 @@ import {RentalPaginatedComponent} from "./rentals/rental-paginated/rental-pagina
 import {LoginComponent} from "./login/login.component";
 import {MenuComponent} from "./Menu/menu/menu.component";
 import {AppComponent} from "./app.component";
+import {BasicGuard} from "./basicGuard";
+import {ShopKeeperGuard} from "./shopKeeperGuard";
 
 
 const routes: Routes = [
-  {path: 'clients', component: ClientsComponent},
-  {path: 'client/detail/:id', component: ClientDetailComponent},
-  {path: 'client/add', component: ClientAddComponent},
-  {path: 'client/filter', component: ClientFilterComponent},
-  {path: 'client/sort', component: ClientSortComponent},
-  {path: 'client/paginated', component: ClientPaginatedComponent},
-  {path: 'movies', component: MoviesComponent},
-  {path: 'movie/detail/:id', component: MovieDetailComponent},
-  {path: 'movie/add', component: MovieAddComponent},
-  {path: 'movie/filter', component: MovieFilterComponent},
-  {path: 'movie/sort', component:MovieSortComponent},
-  {path: 'movie/paginated', component: MoviePaginatedComponent},
-  {path: 'rentals', component: RentalsComponent},
-  {path: 'rental/detail/:id', component: RentalDetailComponent},
-  {path: 'rental/add', component: RentalAddComponent},
-  {path: 'rental/filter', component: RentalFilterComponent},
-  {path: 'rental/sort', component:RentalSortComponent},
-  {path: 'rental/paginated', component: RentalPaginatedComponent},
-  {path: 'rental/paginated', component: RentalPaginatedComponent},
+  {path: 'clients', component: ClientsComponent, canActivate:[BasicGuard]},
+  {path: 'client/detail/:id', component: ClientDetailComponent, canActivate:[BasicGuard]},
+  {path: 'client/add', component: ClientAddComponent, canActivate:[BasicGuard]},
+  {path: 'client/filter', component: ClientFilterComponent, canActivate:[BasicGuard]},
+  {path: 'client/sort', component: ClientSortComponent, canActivate:[BasicGuard]},
+  {path: 'client/paginated', component: ClientPaginatedComponent, canActivate:[BasicGuard]},
+  {path: 'movies', component: MoviesComponent, canActivate:[BasicGuard]},
+  {path: 'movie/detail/:id', component: MovieDetailComponent, canActivate:[BasicGuard]},
+  {path: 'movie/add', component: MovieAddComponent, canActivate:[BasicGuard]},
+  {path: 'movie/filter', component: MovieFilterComponent, canActivate:[BasicGuard]},
+  {path: 'movie/sort', component:MovieSortComponent, canActivate:[BasicGuard]},
+  {path: 'movie/paginated', component: MoviePaginatedComponent, canActivate:[BasicGuard]},
+  {path: 'rentals', component: RentalsComponent, canActivate:[ShopKeeperGuard]},
+  {path: 'rental/detail/:id', component: RentalDetailComponent, canActivate:[ShopKeeperGuard]},
+  {path: 'rental/add', component: RentalAddComponent, canActivate:[ShopKeeperGuard]},
+  {path: 'rental/filter', component: RentalFilterComponent, canActivate:[ShopKeeperGuard]},
+  {path: 'rental/sort', component:RentalSortComponent, canActivate:[ShopKeeperGuard]},
+  {path: 'rental/paginated', component: RentalPaginatedComponent, canActivate:[ShopKeeperGuard]},
+  {path: 'rental/paginated', component: RentalPaginatedComponent, canActivate:[ShopKeeperGuard]},
   {path: 'home', component:MenuComponent},
   {path: 'login', component: LoginComponent},
- // {path: '**', redirectTo:'login'}
+  {path: '**', redirectTo:'login'}
 
 
 

@@ -13,17 +13,19 @@ export class LoginService {
   };
   private url = 'http://localhost:8082/login';
 
+  currentRole: string = "NONE";
+
   constructor(
     private http: HttpClient) {
   }
 
   public login(username: string, password: string): Observable<boolean> {
-    // @ts-ignore
-    return this.http.post(this.url + "?username=" + username + "&password=" + password, {}, this.httpOptions)
+
+    //@ts-ignore
+    return this.http.post(this.url + '?username=' + username + '&password=' + password, {}, this.httpOptions)
       .pipe(
-        tap(result => console.log(result)),
         map(result => {
-          return result["status"] === 200;
+          this.getCurrentRole().subscribe(credentialsLogin => this.currentRole = credentialsLogin);
         })
       );
   }
@@ -31,6 +33,13 @@ export class LoginService {
     console.log("here")
     //@ts-ignore
     return this.http.post("http://localhost:8082/logout", {}, this.httpOptions).subscribe();
+  }
+
+  getCurrentRole(): Observable<string> {
+    return this.http.get("http://localhost:8082/api/role", {withCredentials: true})
+      .pipe(
+        map(response => response["role"])
+      );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

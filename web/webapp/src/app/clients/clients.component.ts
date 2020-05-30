@@ -29,5 +29,10 @@ export class ClientsComponent  {
   {
     this.router.navigate(["client/paginated"])
   }
+  goBack()
+  {
+    this.router.navigate(["home"])
+  }
+
 
 }

@@ -79,6 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/rentals").hasRole(UserRole.SHOPKEEPER.toString())
                 .antMatchers("/api/clients").permitAll()
                 .antMatchers("/api/movies").permitAll()
+                .antMatchers("api/role").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and()

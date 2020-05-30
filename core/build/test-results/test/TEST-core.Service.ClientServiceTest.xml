@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="core.Service.ClientServiceTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-05-29T17:21:29" hostname="DESKTOP-7LUL0AF" time="0.153">
+  <properties/>
+  <testcase name="updateClient" classname="core.Service.ClientServiceTest" time="0.061"/>
+  <testcase name="deleteClient" classname="core.Service.ClientServiceTest" time="0.038"/>
+  <testcase name="findAll" classname="core.Service.ClientServiceTest" time="0.024"/>
+  <testcase name="createClient" classname="core.Service.ClientServiceTest" time="0.027"/>
+  <system-out><![CDATA[Hibernate: select client0_.id as id1_0_0_, client0_.age as age2_0_0_, client0_.firstname as firstnam3_0_0_, client0_.lastname as lastname4_0_0_ from client client0_ where client0_.id=?
+here
+Hibernate: update client set age=?, firstname=?, lastname=? where id=?
+Hibernate: select client0_.id as id1_0_, client0_.age as age2_0_, client0_.firstname as firstnam3_0_, client0_.lastname as lastname4_0_ from client client0_
+Hibernate: select client0_.id as id1_0_0_, client0_.age as age2_0_0_, client0_.firstname as firstnam3_0_0_, client0_.lastname as lastname4_0_0_ from client client0_ where client0_.id=?
+Hibernate: select rentals0_.clientid as clientid5_2_0_, rentals0_.id as id1_2_0_, rentals0_.id as id1_2_1_, rentals0_.clientid as clientid5_2_1_, rentals0_.day as day2_2_1_, rentals0_.month as month3_2_1_, rentals0_.movieid as movieid6_2_1_, rentals0_.year as year4_2_1_ from rental rentals0_ where rentals0_.clientid=?
+Hibernate: delete from client where id=?
+Hibernate: select client0_.id as id1_0_, client0_.age as age2_0_, client0_.firstname as firstnam3_0_, client0_.lastname as lastname4_0_ from client client0_
+Hibernate: select client0_.id as id1_0_, client0_.age as age2_0_, client0_.firstname as firstnam3_0_, client0_.lastname as lastname4_0_ from client client0_
+Hibernate: select client0_.id as id1_0_0_, client0_.age as age2_0_0_, client0_.firstname as firstnam3_0_0_, client0_.lastname as lastname4_0_0_ from client client0_ where client0_.id=?
+Hibernate: select client0_.id as id1_0_1_, client0_.age as age2_0_1_, client0_.firstname as firstnam3_0_1_, client0_.lastname as lastname4_0_1_, rentals1_.clientid as clientid5_2_3_, rentals1_.id as id1_2_3_, rentals1_.id as id1_2_0_, rentals1_.clientid as clientid5_2_0_, rentals1_.day as day2_2_0_, rentals1_.month as month3_2_0_, rentals1_.movieid as movieid6_2_0_, rentals1_.year as year4_2_0_ from client client0_ left outer join rental rentals1_ on client0_.id=rentals1_.clientid where client0_.id=?
+Hibernate: insert into client (id, age, firstname, lastname) values (null, ?, ?, ?)
+Hibernate: select client0_.id as id1_0_, client0_.age as age2_0_, client0_.firstname as firstnam3_0_, client0_.lastname as lastname4_0_ from client client0_
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
