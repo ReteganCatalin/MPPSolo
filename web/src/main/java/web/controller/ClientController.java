@@ -41,8 +41,8 @@ public class ClientController {
         clientService.addClient(clientConverter.convertDtoToModel(clientDto));
     }
     @CrossOrigin
-    @RequestMapping(value = "/clients/{id}", method = RequestMethod.PUT)
-    ClientDto updateClient(@PathVariable Long id,@RequestBody ClientDto clientDto) {
+    @RequestMapping(value = "/clients", method = RequestMethod.PUT)
+    ClientDto updateClient(@RequestBody ClientDto clientDto) {
         log.trace("Method updateClient entered with ClientDto {}",clientDto);
         return clientConverter.convertModelToDto( clientService.updateClient(
                 clientConverter.convertDtoToModel(clientDto)));

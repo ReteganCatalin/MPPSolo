@@ -1,4 +1,6 @@
 package core.model.domain;
 
-public class UserRole {
+public enum UserRole {
+    CLIENT,
+    SHOPKEEPER,
 }

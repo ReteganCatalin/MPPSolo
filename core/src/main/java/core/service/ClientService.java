@@ -136,12 +136,12 @@ public class ClientService implements ClientServiceInterface {
      *
      * @return {@code Set} containing all the Clients Instances from the repository
      */
-    public Set<Client> getAllClients()
+    public List<Client> getAllClients()
     {
         log.trace("getAllClients - method entered");
         Iterable<Client> clients=repository.findAll();
         log.trace("getAllClients - method finished");
-        return StreamSupport.stream(clients.spliterator(),false).collect(Collectors.toSet());
+        return StreamSupport.stream(clients.spliterator(),false).collect(Collectors.toList());
 
     }
 

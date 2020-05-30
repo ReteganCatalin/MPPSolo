@@ -6,17 +6,13 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 
 @Configuration
+@Profile("dev")
 @ComponentScan({"core"})
 @Import({JPAConfig.class})
-@PropertySources({@PropertySource(value = "classpath:local/db.properties"),
+@PropertySources({@PropertySource(value = "classpath:local/db-dev.properties"),
 })
-public class AppLocalConfig {
+public class AppLocalConfigDev implements AppLocalConfigInterface {
 
-    /**
-     * Enables placeholders usage with SpEL expressions.
-     *
-     * @return
-     */
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();

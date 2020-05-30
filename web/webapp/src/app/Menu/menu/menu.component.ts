@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LoginService} from "../../login/LoginService/LoginService";
 
 @Component({
   selector: 'app-menu',
@@ -7,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
   title = 'Rental Shop';
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit(): void {
 
   }
+
+  logout()
+  {
+    console.log("here dsds")
+    this.loginService.logout();
+  }
+
+
 
 }

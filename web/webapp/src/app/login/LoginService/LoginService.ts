@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-
 import {catchError, map, tap} from 'rxjs/operators';
 
 @Injectable({
@@ -10,7 +9,7 @@ import {catchError, map, tap} from 'rxjs/operators';
 export class LoginService {
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'}),
-    withCredentials: true
+    withCredentials: true,observe:'response'
   };
   private url = 'http://localhost:8082/login';
 
@@ -18,18 +17,20 @@ export class LoginService {
     private http: HttpClient) {
   }
 
-  public login(username: string, password: string): Observable<string> {
-    //console.log(this.url + "?username=" + username + "&password=" + password)
-    return this.http.post<Observable<string>>(this.url + "?username=" + username + "&password=" + password,{observe:'response'}, this.httpOptions)
+  public login(username: string, password: string): Observable<boolean> {
+    // @ts-ignore
+    return this.http.post(this.url + "?username=" + username + "&password=" + password, {}, this.httpOptions)
       .pipe(
+        tap(result => console.log(result)),
         map(result => {
-          let cookie = result['Set-Cookie'];
-          console.log(cookie);
-          cookie = cookie.split('=')[1];
-          console.log(cookie);
-          return cookie;
+          return result["status"] === 200;
         })
       );
+  }
+  public logout(): Observable<any> {
+    console.log("here")
+    //@ts-ignore
+    return this.http.post("http://localhost:8082/logout", {}, this.httpOptions).subscribe();
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -43,3 +44,4 @@ export class LoginService {
     };
   }
 }
+

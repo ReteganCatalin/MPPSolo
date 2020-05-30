@@ -1,4 +1,4 @@
-<!--<h1>{{title}}</h1>-->
+<h1>{{title}}</h1>
 
 <!--<form action="" method="post">-->
 <!--  Enter username : <input type="text" name="username"> <BR>-->
@@ -6,32 +6,7 @@
 <!--  <input type="submit" value="Login"/>-->
 <!--</form>-->
 
-<!--<router-outlet></router-outlet>-->
-<div class="main-div">
-  <mat-card>
+<router-outlet></router-outlet>
 
-    <h1 class="mat-h1">Login:</h1>
-
-    <form class="example-form" name="add-form">
-      <h2 class="mat-h2">Login</h2>
-      <mat-form-field class="example-full-width">
-        <mat-label>Username</mat-label>
-        <input #userIn="ngModel" type="text" matInput id="login" [(ngModel)]="name" name="login-in" required>
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>password</mat-label>
-        <input #passIn="ngModel" type="password" matInput id="password-in" [(ngModel)]="password" name="password" required>
-      </mat-form-field>
-
-      <button (click)="login()" color="primary" class="assignment-button" mat-raised-button>
-        Add!
-      </button>
-      <mat-error *ngIf="badLogin">Invalid login!</mat-error>
-    </form>
-
-  </mat-card>
-
-</div>
 
 

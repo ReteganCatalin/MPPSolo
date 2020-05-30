@@ -33,6 +33,8 @@ import { MenuComponent } from './Menu/menu/menu.component';
 import { LoginComponent } from './login/login.component';
 import {LoginService} from './login/LoginService/LoginService';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -70,6 +72,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
     AppRoutingModule,
     ReactiveFormsModule,
     NoopAnimationsModule,
+    MatFormFieldModule,
+    MatCardModule,
   ],
   providers: [ClientService,MovieService,RentalService,LoginService],
   bootstrap: [AppComponent]

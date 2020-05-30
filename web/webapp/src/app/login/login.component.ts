@@ -1,6 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,NgModule } from '@angular/core';
 import {LoginService} from '../login/LoginService/LoginService';
+
 import {Router} from '@angular/router';
+import { MatInputModule } from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
+@NgModule({
+  imports: [
+    MatFormFieldModule,
+    MatInputModule
+  ]
+})
 
 @Component({
   selector: 'app-login',
@@ -19,7 +29,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.loginService.login(this.name, this.password).subscribe(
-      result => this.router.navigateByUrl('/home')
+      result => {
+        // tslint:disable-next-line:triple-equals
+        this.router.navigateByUrl('/home');
+      }, (error) => console.log("Bad Login")
     );
   }
 }

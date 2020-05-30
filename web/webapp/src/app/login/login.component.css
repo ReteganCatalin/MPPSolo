@@ -46,13 +46,8 @@ form {
   margin: auto;
 }
 
-.registerButton {
-  width: 20%;
-  margin-left: 40%;
-  margin-bottom: 2%;
-}
 
-.homeButton {
+.button {
   width: 20%;
   margin-left: 1%;
   margin-top: 1%;

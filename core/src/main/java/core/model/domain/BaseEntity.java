@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.io.Serializable;
 
 
@@ -17,6 +15,8 @@ import java.io.Serializable;
 public class BaseEntity<ID extends Serializable> implements Serializable {
 
     @Id
+    @Column(name = "id")
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue
     private ID id;
 

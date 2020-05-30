@@ -1,4 +1,4 @@
-package java.core;
+package core;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,7 +49,7 @@ public class JPAConfigIT {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("ro.ubb.catalog.core.model");
+        factory.setPackagesToScan("core.model");
         factory.setDataSource(dataSource());
         factory.getJpaPropertyMap().put("hibernate.generate_statistics", true);
         factory.afterPropertiesSet();

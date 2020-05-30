@@ -1,5 +1,7 @@
 package web.security;
 
+import core.model.domain.User;
+import core.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class CatalogUserDetailsService implements UserDetailsService, ApplicationListener<AuthenticationSuccessEvent> {
+public class RentalShopUserDetailsService implements UserDetailsService, ApplicationListener<AuthenticationSuccessEvent> {
 
-    private static final Logger log = LoggerFactory.getLogger(CatalogUserDetailsService.class);
+    private static final Logger log = LoggerFactory.getLogger(RentalShopUserDetailsService.class);
 
     @Autowired
     private UserService userService;

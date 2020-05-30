@@ -19,6 +19,8 @@ import {MoviePaginatedComponent} from "./movies/movie-paginated/movie-paginated.
 import {RentalSortComponent} from "./rentals/rental-sort/rental-sort.component";
 import {RentalPaginatedComponent} from "./rentals/rental-paginated/rental-paginated.component";
 import {LoginComponent} from "./login/login.component";
+import {MenuComponent} from "./Menu/menu/menu.component";
+import {AppComponent} from "./app.component";
 
 
 const routes: Routes = [
@@ -41,8 +43,9 @@ const routes: Routes = [
   {path: 'rental/sort', component:RentalSortComponent},
   {path: 'rental/paginated', component: RentalPaginatedComponent},
   {path: 'rental/paginated', component: RentalPaginatedComponent},
+  {path: 'home', component:MenuComponent},
   {path: 'login', component: LoginComponent},
-  {path: '**', redirectTo:'login'}
+ // {path: '**', redirectTo:'login'}
 
 
 

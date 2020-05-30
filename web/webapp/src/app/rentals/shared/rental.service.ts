@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 import {Observable} from "rxjs";
 import {Rental} from "./rental.model";
@@ -12,13 +12,17 @@ import {Sort} from "../../clients/shared/sort";
 @Injectable()
 export class RentalService {
   private rentalsUrl = 'http://localhost:8082/api/rentals';
+  httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'}), withCredentials: true,
+  };
 
   constructor(private httpClient: HttpClient) {
   }
 
   getRentals(): Observable<Rental[]> {
+    //@ts-ignore
     return this.httpClient
-      .get<Array<Rental>>(this.rentalsUrl);
+      .get<Array<Rental>>(this.rentalsUrl,{withCredentials:true});
   }
 
   getRental(id: number): Observable<Rental> {
@@ -30,9 +34,9 @@ export class RentalService {
 
   saveRental(rental: Rental): Observable<Rental> {
     console.log("saveRental", rental);
-
+    //@ts-ignore
     return this.httpClient
-      .post<Rental>(this.rentalsUrl, rental);
+      .post<Rental>(this.rentalsUrl, rental,{withCredentials:true});
   }
 
   filterRentals(year:string): Observable<Rental[]>
@@ -59,13 +63,13 @@ export class RentalService {
   update(rental): Observable<Rental> {
     const url = `${this.rentalsUrl}`;
     return this.httpClient
-      .put<Rental>(url, rental);
+      .put<Rental>(url, rental,{withCredentials:true});
   }
 
   deleteRental(id: number): Observable<any> {
     const url = `${this.rentalsUrl}/${id}`;
     return this.httpClient
-      .delete(url);
+      .delete(url,{withCredentials:true});
   }
 
 }
