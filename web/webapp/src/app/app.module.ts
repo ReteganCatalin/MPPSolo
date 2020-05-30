@@ -29,6 +29,10 @@ import {ClientPaginatedComponent} from "./clients/client-paginated/client-pagina
 import {MoviePaginatedComponent} from "./movies/movie-paginated/movie-paginated.component";
 import {RentalSortComponent} from "./rentals/rental-sort/rental-sort.component";
 import {RentalPaginatedComponent} from "./rentals/rental-paginated/rental-paginated.component";
+import { MenuComponent } from './Menu/menu/menu.component';
+import { LoginComponent } from './login/login.component';
+import {LoginService} from './login/LoginService/LoginService';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 
 @NgModule({
@@ -55,7 +59,9 @@ import {RentalPaginatedComponent} from "./rentals/rental-paginated/rental-pagina
     RentalFilterComponent,
     RentalListComponent,
     RentalSortComponent,
-    RentalPaginatedComponent
+    RentalPaginatedComponent,
+    MenuComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -63,8 +69,9 @@ import {RentalPaginatedComponent} from "./rentals/rental-paginated/rental-pagina
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NoopAnimationsModule,
   ],
-  providers: [ClientService,MovieService,RentalService],
+  providers: [ClientService,MovieService,RentalService,LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

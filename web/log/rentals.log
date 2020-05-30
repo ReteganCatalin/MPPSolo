@@ -1,0 +1,2 @@
+2020-05-29T20:21:47,014 TRACE [Test worker]: ClientController                     - Method updateClient entered with ClientDto ClientDto(super=BaseDto(id=1), firstName=c1, lastName=cL1, age=21) 
+2020-05-29T20:21:47,127 TRACE [Test worker]: ClientController                     - Method getClients entered 

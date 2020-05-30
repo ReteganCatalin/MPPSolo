@@ -18,6 +18,7 @@ import {ClientPaginatedComponent} from "./clients/client-paginated/client-pagina
 import {MoviePaginatedComponent} from "./movies/movie-paginated/movie-paginated.component";
 import {RentalSortComponent} from "./rentals/rental-sort/rental-sort.component";
 import {RentalPaginatedComponent} from "./rentals/rental-paginated/rental-paginated.component";
+import {LoginComponent} from "./login/login.component";
 
 
 const routes: Routes = [
@@ -39,6 +40,9 @@ const routes: Routes = [
   {path: 'rental/filter', component: RentalFilterComponent},
   {path: 'rental/sort', component:RentalSortComponent},
   {path: 'rental/paginated', component: RentalPaginatedComponent},
+  {path: 'rental/paginated', component: RentalPaginatedComponent},
+  {path: 'login', component: LoginComponent},
+  {path: '**', redirectTo:'login'}
 
 
 
