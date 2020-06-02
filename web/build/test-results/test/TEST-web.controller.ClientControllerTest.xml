@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="web.controller.ClientControllerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-05-29T18:47:30" hostname="DESKTOP-7LUL0AF" time="3.864">
+<testsuite name="web.controller.ClientControllerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-06-02T07:00:38" hostname="DESKTOP-7LUL0AF" time="0.266">
   <properties/>
-  <testcase name="updateClient" classname="web.controller.ClientControllerTest" time="3.55"/>
-  <testcase name="deleteClient" classname="web.controller.ClientControllerTest" time="0.141"/>
-  <testcase name="createClient" classname="web.controller.ClientControllerTest" time="0.05"/>
-  <testcase name="getClients" classname="web.controller.ClientControllerTest" time="0.117"/>
-  <system-out><![CDATA[2020-05-29T21:47:33,905 TRACE [Test worker]: ClientController                     - Method updateClient entered with ClientDto ClientDto(super=BaseDto(id=1), firstName=c1, lastName=cL1, age=21) 
-2020-05-29T21:47:34,226 TRACE [Test worker]: ClientController                     - Method deleteClient entered with id 1 
-2020-05-29T21:47:34,275 TRACE [Test worker]: ClientController                     - Method saveClient entered with ClientDto ClientDto(super=BaseDto(id=1), firstName=c1, lastName=cL1, age=21) 
-2020-05-29T21:47:34,339 TRACE [Test worker]: ClientController                     - Method getClients entered 
+  <testcase name="updateClient" classname="web.controller.ClientControllerTest" time="0.149"/>
+  <testcase name="deleteClient" classname="web.controller.ClientControllerTest" time="0.034"/>
+  <testcase name="createClient" classname="web.controller.ClientControllerTest" time="0.031"/>
+  <testcase name="getClients" classname="web.controller.ClientControllerTest" time="0.05"/>
+  <system-out><![CDATA[2020-06-02T10:00:38,210 TRACE [Test worker]: ClientController                     - Method updateClient entered with ClientDto ClientDto(super=BaseDto(id=1), firstName=c1, lastName=cL1, age=21) 
+2020-06-02T10:00:38,250 TRACE [Test worker]: ClientController                     - Method deleteClient entered with id 1 
+2020-06-02T10:00:38,281 TRACE [Test worker]: ClientController                     - Method saveClient entered with ClientDto ClientDto(super=BaseDto(id=1), firstName=c1, lastName=cL1, age=21) 
+2020-06-02T10:00:38,330 TRACE [Test worker]: ClientController                     - Method getClients entered 
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

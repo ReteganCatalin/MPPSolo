@@ -13,7 +13,7 @@ export class LoginService {
   };
   private url = 'http://localhost:8082/login';
 
-  currentRole: string = "NONE";
+  currentRole: string = "NONE" ;
 
   constructor(
     private http: HttpClient) {

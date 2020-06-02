@@ -110,12 +110,12 @@ public class MovieService implements MovieServiceInterface {
      *
      * @return {@code Set} containing all the Movie Instances from the repository
      */
-    public Set<Movie> getAllMovies()
+    public List<Movie> getAllMovies()
     {
         log.trace("getAllMovies - method entered");
         Iterable<Movie> movies=repository.findAll();
         log.trace("getAllMovies - method finished");
-        return StreamSupport.stream(movies.spliterator(),false).collect(Collectors.toSet());
+        return StreamSupport.stream(movies.spliterator(),false).collect(Collectors.toList());
 
 
     }

@@ -1,4 +1,9 @@
-Ä2020-05-29T21:47:33,905 TRACE [Test worker]: ClientController                     - Method updateClient entered with ClientDto ClientDto(super=BaseDto(id=1), firstName=c1, lastName=cL1, age=21) 
-|2020-05-29T21:47:34,226 TRACE [Test worker]: ClientController                     - Method deleteClient entered with id 1 
-Â2020-05-29T21:47:34,275 TRACE [Test worker]: ClientController                     - Method saveClient entered with ClientDto ClientDto(super=BaseDto(id=1), firstName=c1, lastName=cL1, age=21) 
-p2020-05-29T21:47:34,339 TRACE [Test worker]: ClientController                     - Method getClients entered 
+{2020-06-02T10:00:37,715 TRACE [Test worker]: MovieController                      - Method deleteMovie entered with id 1 
+à2020-06-02T10:00:37,899 TRACE [Test worker]: MovieController                      - Method updateMovie entered with movieDto MovieDto(super=BaseDto(id=1), title=t1, genre=g1, yearOfRelease=2003, director=d1, mainStar=mS1) 
+à2020-06-02T10:00:38,027 TRACE [Test worker]: MovieController                      - Method saveMovie entered with movieDto = MovieDto(super=BaseDto(id=1), title=t1, genre=g1, yearOfRelease=2003, director=d1, mainStar=mS1) 
+o2020-06-02T10:00:38,050 TRACE [Test worker]: MovieController                      - Method getMovies entered 
+Ä2020-06-02T10:00:38,210 TRACE [Test worker]: ClientController                     - Method updateClient entered with ClientDto ClientDto(super=BaseDto(id=1), firstName=c1, lastName=cL1, age=21) 
+|2020-06-02T10:00:38,250 TRACE [Test worker]: ClientController                     - Method deleteClient entered with id 1 
+	Â2020-06-02T10:00:38,281 TRACE [Test worker]: ClientController                     - Method saveClient entered with ClientDto ClientDto(super=BaseDto(id=1), firstName=c1, lastName=cL1, age=21) 
+
+p2020-06-02T10:00:38,330 TRACE [Test worker]: ClientController                     - Method getClients entered 

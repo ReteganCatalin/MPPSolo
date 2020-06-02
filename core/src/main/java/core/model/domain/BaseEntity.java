@@ -16,8 +16,8 @@ public class BaseEntity<ID extends Serializable> implements Serializable {
 
     @Id
     @Column(name = "id")
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue
     private ID id;
 
 

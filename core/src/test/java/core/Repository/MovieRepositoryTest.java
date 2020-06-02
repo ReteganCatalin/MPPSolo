@@ -63,7 +63,7 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    public void deleteStudent() throws Exception {
+    public void deleteClient() throws Exception {
         movieRepository.deleteById(1L);
         List<Movie> movies = movieRepository.findAll();
         assertEquals("there should be three movies", 3, movies.size());

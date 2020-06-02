@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="web.controller.MovieControllerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-06-02T07:00:35" hostname="DESKTOP-7LUL0AF" time="2.709">
+  <properties/>
+  <testcase name="deleteMovie" classname="web.controller.MovieControllerTest" time="2.424"/>
+  <testcase name="updateMovie" classname="web.controller.MovieControllerTest" time="0.2"/>
+  <testcase name="createMovie" classname="web.controller.MovieControllerTest" time="0.052"/>
+  <testcase name="getMovies" classname="web.controller.MovieControllerTest" time="0.033"/>
+  <system-out><![CDATA[2020-06-02T10:00:37,715 TRACE [Test worker]: MovieController                      - Method deleteMovie entered with id 1 
+2020-06-02T10:00:37,899 TRACE [Test worker]: MovieController                      - Method updateMovie entered with movieDto MovieDto(super=BaseDto(id=1), title=t1, genre=g1, yearOfRelease=2003, director=d1, mainStar=mS1) 
+2020-06-02T10:00:38,027 TRACE [Test worker]: MovieController                      - Method saveMovie entered with movieDto = MovieDto(super=BaseDto(id=1), title=t1, genre=g1, yearOfRelease=2003, director=d1, mainStar=mS1) 
+2020-06-02T10:00:38,050 TRACE [Test worker]: MovieController                      - Method getMovies entered 
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
