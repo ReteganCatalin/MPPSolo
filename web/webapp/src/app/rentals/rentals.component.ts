@@ -17,23 +17,22 @@ export class RentalsComponent  {
 
     this.router.navigate(["rental/add"]);
   }
-  goBack()
-  {
-    this.router.navigate(["home"])
+  goBack() {
+    this.router.navigate(["home"]);
   }
 
   // filterRentals()
   // {
-  //   this.router.navigate(["rental/filter"])
+  //   this.router.navigate(["rental/filter"]);
   // }
   //
   // sortRentals()
   // {
-  //   this.router.navigate(["rental/sort"])
+  //   this.router.navigate(["rental/sort"]);
   // }
   // paginatedRentals()
   // {
-  //   this.router.navigate(["rental/paginated"])
+  //   this.router.navigate(["rental/paginated"]);
   // }
 
 }

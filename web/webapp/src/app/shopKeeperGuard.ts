@@ -13,7 +13,7 @@ export class ShopKeeperGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     console.log("shopkeeper guard" + this.loginService.currentRole);
     if (this.loginService.currentRole !== "ROLE_SHOPKEEPER") {
-      this.router.navigateByUrl("/home");
+      this.router.navigateByUrl("/login");
       return false;
     } else {
       return true;
