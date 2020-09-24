@@ -9,7 +9,7 @@
 
 #### User Manual  
 
-[Manual](./User Manual.pdf)
+[Manual](./UserManual.pdf)
 
 #### Brief Presentation of the app
 
