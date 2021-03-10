@@ -1,0 +1,10 @@
+{
+  "/posts": {
+    "target": "http://localhost:8080/login",
+    "secure": true,
+    "pathRewrite": {
+      "^/posts": ""
+    },
+    "changeOrigin": true
+  }
+}

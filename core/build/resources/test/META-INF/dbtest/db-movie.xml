@@ -1,6 +1,0 @@
-<dataset>
-    <movie id="1" mainStar="ms1"  director="d1" genre="g1" yearOfRelease="2003" title="t1" />
-    <movie id="2" mainStar="ms1"  director="d1" genre="g1" yearOfRelease="2003" title="t1" />
-    <movie id="3" mainStar="ms1"  director="d1" genre="g1" yearOfRelease="2003" title="t1" />
-    <movie id="4" mainStar="ms1"  director="d1" genre="g1" yearOfRelease="2003" title="t1" />
-</dataset>

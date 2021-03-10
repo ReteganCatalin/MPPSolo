@@ -61,28 +61,28 @@ public class MovieController {
     @RequestMapping(value ="/sortMovies",method=RequestMethod.POST )
     List<MovieDto> getSortedMovies(@RequestBody SortDto sorted)
     {
-        log.trace("Method getSortedMovies entered");
-        List<SortObjectDTO> sorts=sorted.getSort();
-        Sort sort=null;
-        if(sorts.get(0).getDirection().equals("Asc")) {
-            sort = new Sort(sorts.get(0).getColumn()).ascending();
-        }
-        else
-        {
-            sort = new Sort(sorts.get(0).getColumn()).descending();
-        }
-        for(int index=1;index<sorts.size();index++)
-        {
-            if(sorts.get(index).getDirection().equals("Asc")) {
-                sort=sort.and(new Sort(sorts.get(index).getColumn()).ascending());
-            }
-            else
-            {
-                sort=sort.and(new Sort(sorts.get(index).getColumn()).descending());
-            }
-        }
-        log.trace("Method getMoviesSorted sort {} created", sort);
-        return movieConverter.convertModelsToDtos(movieService.getAllMoviesSorted(sort));
+//        log.trace("Method getSortedMovies entered");
+//        List<SortObjectDTO> sorts=sorted.getSort();
+//        Sort sort=null;
+//        if(sorts.get(0).getDirection().equals("Asc")) {
+//            sort = new Sort(sorts.get(0).getColumn()).ascending();
+//        }
+//        else
+//        {
+//            sort = new Sort(sorts.get(0).getColumn()).descending();
+//        }
+//        for(int index=1;index<sorts.size();index++)
+//        {
+//            if(sorts.get(index).getDirection().equals("Asc")) {
+//                sort=sort.and(new Sort(sorts.get(index).getColumn()).ascending());
+//            }
+//            else
+//            {
+//                sort=sort.and(new Sort(sorts.get(index).getColumn()).descending());
+//            }
+//        }
+//        log.trace("Method getMoviesSorted sort {} created", sort);
+       return movieConverter.convertModelsToDtos(movieService.getAllMovies());
     }
     @CrossOrigin
     @RequestMapping(value = "/filterMovies/title={title}", method=RequestMethod.GET)

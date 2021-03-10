@@ -2,15 +2,7 @@ import { Component, OnInit,NgModule } from '@angular/core';
 import {LoginService} from '../login/LoginService/LoginService';
 
 import {Router} from '@angular/router';
-import { MatInputModule } from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
 
-@NgModule({
-  imports: [
-    MatFormFieldModule,
-    MatInputModule
-  ]
-})
 
 @Component({
   selector: 'app-login',

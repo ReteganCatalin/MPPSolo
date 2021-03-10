@@ -1,6 +1,0 @@
-<dataset>
-    <client id="1" firstname="cn1" lastname="john" age="22"  />
-    <client id="2" firstname="cn1" lastname="john" age="22"  />
-    <client id="3" firstname="cn1" lastname="john" age="22"   />
-    <client id="4" firstname="cn1" lastname="john" age="22"   />
-</dataset>

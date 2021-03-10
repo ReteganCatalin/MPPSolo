@@ -11,7 +11,7 @@ export class LoginService {
     headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'}),
     withCredentials: true,observe:'response'
   };
-  private url = 'http://localhost:8082/login';
+  private url = 'http://localhost:8080/login';
 
   currentRole: string = "NONE" ;
 
