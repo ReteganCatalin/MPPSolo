@@ -1,12 +1,12 @@
 # Rental Shop
 
 #### READ ME BEFORE USING THE APP !!!
-
+```
 1.Change the username and password in db-dev.properties for pgAdmin to the ones you use. 
 2.Create MPP database in pgAdmin
 3.Create app_user Table and add users with a first_name, last_name, user_name, password and user_role(CLIENT or SHOPKEEPER)
 4.Start the application  
-
+```
 #### User Manual  
 
 [Manual](./UserManual.pdf)
