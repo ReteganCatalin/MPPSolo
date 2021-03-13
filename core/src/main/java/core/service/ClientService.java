@@ -25,19 +25,21 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+@Service("ClientService")
 public class ClientService implements ClientServiceInterface {
     public static final Logger log = LoggerFactory.getLogger(ClientService.class);
-    @Autowired
-    private ClientRepository repository;
-    @Autowired
-    private MovieRepository movieRepository;
-    @Autowired
-    private Validator<Client> validator;
 
     @Autowired
-    private Validator<Rental> validatorRental;
+    protected ClientRepository repository;
 
+    @Autowired
+    protected MovieRepository movieRepository;
+
+    @Autowired
+    protected Validator<Client> validator;
+
+    @Autowired
+    protected Validator<Rental> validatorRental;
 
     @Autowired
     private EntityManager entityManager;
@@ -155,29 +157,6 @@ public class ClientService implements ClientServiceInterface {
         return StreamSupport.stream(sortedClients.spliterator(),false).collect(Collectors.toList());
     }
 
-    /**
-     * Filters all the clients by their First or Last Name
-     *
-     * @param name a substring of the First or Last Name of type {@code String}
-     * @return {@code HashSet} containing all the Client Instances from the repository that contain the name parameter in the
-     * first name or the last name
-     */
-    public List<Client> filterClientsByName(String name)
-    {
-        log.trace("filterClientsByName - method entered name={}",name);
-        List<Client> clients=repository.findClientsByName(name);
-        log.trace("filterClientsByName - method finished filtered={}",clients);
-        return clients;
-    }
-    @Override
-    public List<Client> filterClientsByAge(Integer age)
-    {
-        log.trace("filterClientsByAge - method entered name={}",age);
-        List<Client> clients=repository.findByAgeWithRentalAndMovie(age);
-        //log.trace("filterClientsByAge - method finished filtered={}, rentals={}, movie={}",clients,clients.get(0).getRentals(),clients.get(0).getRentals().get(0).getMovie());
-        log.trace("filterClientsByAge - method finished filtered={}",clients);
-        return clients;
-    }
 
     @Transactional
     public void addRental(Long ClientID,Long MovieID,int year,int month,int day) throws ValidatorException, MyException
@@ -294,6 +273,30 @@ public class ClientService implements ClientServiceInterface {
         log.trace("statOldestClients - method entered ");
         log.trace("statOldestClients - method finished ");
         return repository.findAll(new Sort("Age").descending());
+    }
+
+    /**
+     * Filters all the clients by their First or Last Name
+     *
+     * @param name a substring of the First or Last Name of type {@code String}
+     * @return {@code HashSet} containing all the Client Instances from the repository that contain the name parameter in the
+     * first name or the last name
+     */
+    public List<Client> filterClientsByName(String name) {
+        log.trace("filterClientsByName not implemented- method entered name={}", name);
+        //List<Client> clients = repository.findClientsByName(name);
+        log.trace("filterClientsByName not implemented- method finished filtered={}", "null" +
+                "");
+        return null;
+    }
+
+    @Override
+    public List<Client> filterClientsByAge(Integer age) {
+        log.trace("filterClientsByAge not implemented- method entered name={}", age);
+        //List<Client> clients = repository.findByAgeWithRentalAndMovie(age);
+        //log.trace("filterClientsByAge - method finished filtered={}, rentals={}, movie={}",clients,clients.get(0).getRentals(),clients.get(0).getRentals().get(0).getMovie());
+        log.trace("filterClientsByAge not implemented- method finished filtered ={}", "null");
+        return null;
     }
 
 }

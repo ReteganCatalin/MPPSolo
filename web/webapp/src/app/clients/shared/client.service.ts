@@ -12,7 +12,7 @@ import {map} from "rxjs/operators";
 
 @Injectable()
 export class ClientService {
-  private clientsUrl = 'http://localhost:8082/api/clients';
+  private clientsUrl = 'http://localhost:8080/api/clients';
 
   constructor(private httpClient: HttpClient) {
   }

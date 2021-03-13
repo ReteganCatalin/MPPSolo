@@ -7,6 +7,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
+
 
 /**
  * Created by radu.
@@ -22,14 +24,12 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
+                        .exposedHeaders("Access-Control-Allow-Origin:*")
                         .allowedOrigins("http://localhost:4200", "http://localhost:8080","http://localhost:8082")
                         .allowedMethods("GET", "PUT", "POST", "DELETE","OPTIONS")
-                        //.exposedHeaders("Access-Control-Allow-Origin")
-                        .exposedHeaders("Access-Control-Allow-Credentials")
+                        //.exposedHeaders("Access-Control-Allow-Credentials")
                         .allowCredentials(true)
                         .allowedHeaders("Content-Type");
-
-
             }
         };
     }

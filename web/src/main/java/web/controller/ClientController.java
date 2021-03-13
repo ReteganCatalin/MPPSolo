@@ -1,9 +1,11 @@
 package web.controller;
 
 import core.service.ClientServiceInterface;
+import lombok.EqualsAndHashCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ public class ClientController {
     public static final Logger log= LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
+    @Qualifier("ClientWithFiltersService")
     private ClientServiceInterface clientService;
 
     @Autowired

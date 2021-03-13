@@ -26,12 +26,12 @@ import {ShopKeeperGuard} from "./shopKeeperGuard";
 
 
 const routes: Routes = [
-  {path: 'clients', component: ClientsComponent, canActivate:[BasicGuard]},
-  {path: 'client/detail/:id', component: ClientDetailComponent, canActivate:[BasicGuard]},
-  {path: 'client/add', component: ClientAddComponent, canActivate:[BasicGuard]},
-  {path: 'client/filter', component: ClientFilterComponent, canActivate:[BasicGuard]},
-  {path: 'client/sort', component: ClientSortComponent, canActivate:[BasicGuard]},
-  {path: 'client/paginated', component: ClientPaginatedComponent, canActivate:[BasicGuard]},
+  {path: 'clients', component: ClientsComponent},
+  {path: 'client/detail/:id', component: ClientDetailComponent},
+  {path: 'client/add', component: ClientAddComponent},
+  {path: 'client/filter', component: ClientFilterComponent},
+  {path: 'client/sort', component: ClientSortComponent},
+  {path: 'client/paginated', component: ClientPaginatedComponent},
   {path: 'movies', component: MoviesComponent, canActivate:[BasicGuard]},
   {path: 'movie/detail/:id', component: MovieDetailComponent, canActivate:[BasicGuard]},
   {path: 'movie/add', component: MovieAddComponent, canActivate:[BasicGuard]},
