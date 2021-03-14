@@ -5,12 +5,14 @@ import core.model.domain.Movie;
 import core.model.domain.Rental;
 import core.model.exceptions.MyException;
 import core.model.exceptions.ValidatorException;
+import core.model.validators.ClientValidator;
 import core.model.validators.Validator;
 import core.repository.ClientRepository;
 import core.repository.MovieRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -28,6 +30,9 @@ import java.util.stream.StreamSupport;
 @Service("ClientService")
 public class ClientService implements ClientServiceInterface {
     public static final Logger log = LoggerFactory.getLogger(ClientService.class);
+
+    @Autowired
+    private ApplicationContext appContext;
 
     @Autowired
     protected ClientRepository repository;
@@ -72,6 +77,9 @@ public class ClientService implements ClientServiceInterface {
     @Transactional
     public void addClient(Client client) throws ValidatorException
     {
+        ClientRepository clientRepository = appContext.getBean(ClientRepository.class);
+        String clientRepositoryClassName = clientRepository.getClass().getName();
+        log.info(clientRepositoryClassName);
         log.trace("addClient - method entered: client={}", client);
         validator.validate(client);
         repository.findById(client.getId()).ifPresent(optional->{throw new MyException("Client already exists");});
@@ -140,6 +148,14 @@ public class ClientService implements ClientServiceInterface {
      */
     public List<Client> getAllClients()
     {
+        ClientRepository clientRepository = appContext.getBean(ClientRepository.class);
+        String clientRepositoryClassName = clientRepository.getClass().getName();
+        log.info(clientRepositoryClassName);
+
+        ClientValidator clientValidator = appContext.getBean(ClientValidator.class);
+        String clientValidatorClassName = clientValidator.getClass().getName();
+        log.info(clientValidatorClassName);
+
         log.trace("getAllClients - method entered");
         Iterable<Client> clients=repository.findAll();
         log.trace("getAllClients - method finished");

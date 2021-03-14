@@ -5,9 +5,12 @@ import core.model.domain.Client_;
 import core.model.domain.Rental;
 import core.model.domain.Rental_;
 import core.repository.ClientCustomRepository;
+import core.repository.ClientRepository;
 import core.repository.CustomRepositorySupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +24,14 @@ public class ClientCriteriaAPIRepositoryImpl extends CustomRepositorySupport
         implements ClientCustomRepository {
     public static final Logger log = LoggerFactory.getLogger(ClientCriteriaAPIRepositoryImpl.class);
 
+    @Autowired
+    private ApplicationContext appContext;
+
+
     @Override
     public List<Client> findByAgeWithRentalAndMovie(@Param("age") int age) {
+
+
         log.trace("findByAgeWithRentalAndMovie - method entered: age={}", age);
         EntityManager entityManager = getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -47,6 +56,11 @@ public class ClientCriteriaAPIRepositoryImpl extends CustomRepositorySupport
     @Override
     public List<Client> findByFirstName(@Param("name") String name)
     {
+
+        ClientRepository clientRepository = appContext.getBean(ClientRepository.class);
+        String clientRepositoryClassName = clientRepository.getClass().getName();
+        log.info(clientRepositoryClassName);
+
         log.trace("findByFirstName- method entered");
         CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 

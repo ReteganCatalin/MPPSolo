@@ -5,6 +5,7 @@ import core.repository.ClientCustomRepository;
 import core.repository.CustomRepositorySupport;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.query.Param;
@@ -18,11 +19,11 @@ public class ClientNativeSQLRepositoryImpl extends CustomRepositorySupport
         implements ClientCustomRepository {
     public static final Logger log = LoggerFactory.getLogger(ClientNativeSQLRepositoryImpl.class);
     @Override
-    @Transactional
     public List<Client> findByAgeWithRentalAndMovie(@Param("age") int age) {
         log.trace("findByAgeWithRentalAndMovie - method entered: age={}", age);
         Session hibernateEntityManager = getEntityManager().unwrap(Session.class);
-        Session session = hibernateEntityManager.getSession();
+        SessionFactory hibernateSessionFactory = hibernateEntityManager.getSessionFactory();
+        Session session = hibernateSessionFactory.getCurrentSession();
 
         org.hibernate.Query query = session.createSQLQuery("select  {client.*},{rental.*},{movie.*} " +
                 "from Client client " +

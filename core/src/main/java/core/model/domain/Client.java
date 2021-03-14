@@ -13,7 +13,6 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true,exclude = {"rentals"})
 @ToString(callSuper = true,exclude = {"rentals"})
-@Builder
 @NamedEntityGraphs({
         @NamedEntityGraph(name = "clientWithRentals",
         attributeNodes = @NamedAttributeNode(value = "rentals")),
@@ -36,4 +35,45 @@ public class Client extends BaseEntity<Long> {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Rental> rentals;
 
+    public static ClientBuilder builder() {
+        return new ClientBuilder();
+    }
+
+    public static class ClientBuilder {
+        private String firstName;
+        private String lastName;
+        private int age;
+        private List<Rental> rentals;
+
+        ClientBuilder() {
+        }
+
+        public ClientBuilder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public ClientBuilder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public ClientBuilder age(int age) {
+            this.age = age;
+            return this;
+        }
+
+        public ClientBuilder rentals(List<Rental> rentals) {
+            this.rentals = rentals;
+            return this;
+        }
+
+        public Client build() {
+            return new Client(firstName, lastName, age, rentals);
+        }
+
+        public String toString() {
+            return "Client.ClientBuilder(firstName=" + this.firstName + ", lastName=" + this.lastName + ", age=" + this.age + ", rentals=" + this.rentals + ")";
+        }
+    }
 }
